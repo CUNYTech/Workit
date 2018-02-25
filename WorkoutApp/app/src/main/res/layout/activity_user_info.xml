@@ -182,7 +182,7 @@
                     android:id="@+id/FemaleRB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Feale"
+                    android:text="Female"
                     android:textColor="@color/white" />
 
             </RadioGroup>
@@ -196,7 +196,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:background="@drawable/buttonstyle"
-            android:text="Done"
+            android:text="SELECT SCHEDULE"
             android:textColor="#fff" />
 
     </LinearLayout>

@@ -35,6 +35,8 @@ public class RegisterActivity extends AppCompatActivity {
                 Intent SignUpIntent = new Intent(RegisterActivity.this, UserInfoActivity.class);
                 RegisterActivity.this.startActivity(SignUpIntent);
             }
+
+
         });
 
     }
