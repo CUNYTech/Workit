@@ -44,26 +44,6 @@ class User(db.Model):
 		return sha256_crypt.verify(password, self.password)
 
 
-class Datetime(db.Model):
-	__tablename__ = 'datetimes'
-	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	datetime = db.Column(db.DateTime, nullable=False, unique=True)
-	dateUserWorkoutJoins = db.relationship('DateUserWorkoutJoin', backref='datetime', lazy=True)
-	
-
-	def __repr__(self):
-		return "<datetimes(datetime= '%s')>" %(self.datetime)
-
-class WorkoutName(db.Model):
-	__tablename__ = 'workoutNames'
-	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	name = db.Column(db.String(80), unique=True, nullable=False)
-	dateUserWorkoutJoins = db.relationship('DateUserWorkoutJoin', backref='workoutName', lazy=True)
-
-
-	def __repr__(self):
-		return "<workoutNames(name='%s')>" %(self.name) 
-
 class Weight(db.Model):
 	__tablename__ = "weights"
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -85,13 +65,3 @@ class WeightUserJoin(db.Model):
 	def __repr__(self):
 		return "<weightUserjoins(user_id = '%s', weight_id = '%s' date = '%s')>" %(self.user_id, self.weight_id, self.date)
 
-class DateUserWorkoutJoin(db.Model):
-	__tablename__	= 'dateUserWorkoutJoins'
-	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-	workoutName_id = db.Column(db.Integer, db.ForeignKey('workoutNames.id'))
-	datetime_id = db.Column(db.Integer, db.ForeignKey('datetimes.id'))
-	
-
-	def __repr__(self):
-		return "<dateUserWorkoutJoins(user_id='%s', workoutName_id='%s', datetime_id='%s')>" %(self.user_id, self.workoutName_id, self.datetime_id)
