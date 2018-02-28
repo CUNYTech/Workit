@@ -20,9 +20,9 @@ user = Blueprint('user', __name__)
 def userLogin(username, password):
 	#some logic to decrypt password
 	if userController.verifyUser(username,password):
-		return jsonify("logged in" : username)
+		return jsonify({"logged in" : username})
 
-	return jsonify("Failed": "log in")
+	return jsonify({"Failed": "log in"})
 
 
 # NOTE must implement some sort of encryption for route url 
@@ -33,7 +33,7 @@ def createNewUser(username, email, password, fname, lname, gender, height, heigh
 	if userController.createUser(username, email, password, fname, lname, gender, height, heightUnit, weight, weightUnits, bmi):
 		return redirect("/login/" + username + "/" + password)
 
-	return jsonify("Failed": "create user")
+	return jsonify({"Failed": "create user"})
 # change any of the user fields
 # email, username, password(not implemented yet), first name = fname, last name = lname
 @user.route("/update/username/<field>/<newChange>")
