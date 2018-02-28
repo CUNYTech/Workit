@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0, '/home/russ/Desktop/workoutApp/api/backend')
+import os
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 
 from datetime import datetime
 from model.users import User, Weight, WeightUserJoin, db

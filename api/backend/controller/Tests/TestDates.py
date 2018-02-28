@@ -1,4 +1,5 @@
 import sys
+import os
 sys.path.insert(0, '/home/russ/Desktop/workoutApp/api')
 
 import unittest
