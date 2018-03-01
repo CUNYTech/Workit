@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '/home/brandon/workoutApp/backend')
+sys.path.insert(0, '/home/russ/Desktop/workoutApp/backend')
 
 from flask import Flask 
 from model.users import db
@@ -7,9 +7,9 @@ from model.users import db
 
 def create_app():
 	app = Flask(__name__)
-	app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://testdb:testtest@teststuff.c6nwp1reyyfx.us-east-2.rds.amazonaws.com/dbstuff'
+	app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pen226@localhost/workoutApp'
 	app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-	app.config['SECRET_KEY'] = 'testtest'
+	app.config['SECRET_KEY'] = 'dude'
 	db.init_app(app)
 	return app
 
