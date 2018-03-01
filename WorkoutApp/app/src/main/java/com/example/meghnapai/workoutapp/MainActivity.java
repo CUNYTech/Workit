@@ -20,15 +20,12 @@ public class MainActivity extends AppCompatActivity {
 
         final TextView WelcomTextView= (TextView) findViewById(R.id.WelcomeTextView);
         final TextView IntroductionTextView= (TextView) findViewById(R.id.IntroductionTextView);
-        final EditText usernameTextEdit= (EditText) findViewById(R.id.usernameTextEdit);
+        final  EditText usernameTextEdit= (EditText) findViewById(R.id.usernameTextEdit);
         final EditText passwordTextEdit= (EditText) findViewById(R.id.passwordTextEdit);
 
         final Button infoBtn = (Button) findViewById(R.id.infoBtn);
         final Button SignUpBtn = (Button) findViewById(R.id.SignUpBtn);
         final Button LogInBtn = (Button) findViewById(R.id.LogInBtn);
-
-        String user = usernameTextEdit.getText().toString();    // FOR SESSION STUFF
-        String pass = passwordTextEdit.getText().toString();    // FOR SESSION STUFF
 
 
 
