@@ -8,16 +8,18 @@ public class Session {
     public static final String Password = "password";
     public static final String PREFERENCES_NAME = "WorkoutApp";
     SharedPreferences prefs;
+    SharedPreferences.Editor editor;
 
     public Session(Context context) {
         // TODO Auto-generated constructor stub
         prefs = context.getSharedPreferences(PREFERENCES_NAME,
                 Context.MODE_PRIVATE);
+        editor = prefs.edit();
     }
 
     public void setUsername(String username) {
-        prefs.edit().putString("username", username);
-        prefs.commit();
+        editor.putString("username", username);
+        editor.commit();
     }
 
     public String getUsername() {
@@ -26,8 +28,8 @@ public class Session {
     }
 
     public void setPassword(String password) {
-        prefs.edit().putString("password", password);
-        //prefs.commit();
+        editor.putString("password", password);
+        editor.commit();
     }
 
     public String getPassword() {
