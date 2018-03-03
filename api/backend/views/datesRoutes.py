@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '/home/russ/Desktop/workoutApp/api/backend')
+sys.path.insert(0, '/Users/xiaochenwang/workoutApp/api/backend')
 
 from controller import userController, DatesController
 from model import users

@@ -1,0 +1,33 @@
+CREATE TABLE users(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	username VARCHAR(255) NOT NULL UNIQUE,
+	firstName VARCHAR(255) NOT NULL,
+	lastName VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL UNIQUE,
+	password VARCHAR(255) NOT NULL,
+	height DECIMAL(5,2),
+	heightType VARCHAR(10),
+	weight DECIMAL(5,2),
+	weightType VARCHAR(10),
+	age INT,
+	gender VARCHAR(20),
+	bmi DECIMAL(5,2)
+);
+
+CREATE TABLE dates(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	_datetime datetime NOT NULL UNIQUE
+	
+);
+
+CREATE TABLE workoutNames(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE workoutUserDateJoin(
+	date_id INT NOT NULL,
+	workoutName_id INT NULL,
+	FOREIGN KEY (date_id) REFERENCES dates(id),
+	FOREIGN KEY (workoutName_id) REFERENCES workoutName(id)	
+);

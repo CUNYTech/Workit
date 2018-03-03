@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '/home/russ/Desktop/workoutApp/api/backend')
+sys.path.insert(0, '/Users/xiaochenwang/workoutApp/api/backend')
 
 from controller import userController
 from model import users
@@ -19,21 +19,24 @@ user = Blueprint('user', __name__)
 @user.route("/login/<username>/<password>")
 def userLogin(username, password):
 	#some logic to decrypt password
-	if userController.verifyUser(username,password):
-		return jsonify("logged in" : username)
+    if userController.verifyUser(username,password):
+        return jsonify({"log in" : username})
+    
+    return jsonify({"Failed": "log in"})
 
-	return jsonify("Failed": "log in")
 
-
-# NOTE must implement some sort of encryption for route url 
+# NOTE must implement some sort of encryption for route url
 # creating new user
 @user.route("/new/<username>/<email>/<password>/<fname>/<lname>/<gender>/<height>/<heightUnit>/<weight>/<weightUnits>/<bmi>")
 def createNewUser(username, email, password, fname, lname, gender, height, heightUnit, weight, weightUnits, bmi):
-	
-	if userController.createUser(username, email, password, fname, lname, gender, height, heightUnit, weight, weightUnits, bmi):
-		return redirect("/login/" + username + "/" + password)
 
-	return jsonify("Failed": "create user")
+    if userController.createUser(username, email, password, fname, lname, gender, height, heightUnit, weight, weightUnits, bmi):
+        return redirect("user/login/"+ username + password)
+
+    return jsonify({"Failed" : "create new user"})
+
+
+
 # change any of the user fields
 # email, username, password(not implemented yet), first name = fname, last name = lname
 @user.route("/update/username/<field>/<newChange>")

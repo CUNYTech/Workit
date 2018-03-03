@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '/home/russ/Desktop/workoutApp/backend')
+sys.path.insert(0, '/Users/xiaochenwang/workoutApp/api/backend')
 
 from model.users import User, db
 from datetime import datetime
