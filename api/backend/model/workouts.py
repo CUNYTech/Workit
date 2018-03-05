@@ -24,7 +24,7 @@ class WorkoutName(db.Model):
 	def __repr__(self):
 		return "<workoutNames(name='%s')>" %(self.name) 
 
-class exercise(db.Model):
+class Exercise(db.Model):
 	__tablename__ = 'exercises'
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	name = db.Column(db.String(200), unique=True, nullable=False)

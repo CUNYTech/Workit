@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0, '/home/russ/Desktop/workoutApp/api/backend')
+import os
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 
 import os
 from flask import Flask 
@@ -12,7 +13,7 @@ auth = HTTPBasicAuth()
 
 def create_app():
 	app = Flask(__name__)
-	app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pen226@localhost/workoutApp'
+	app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + sys.argv[1]+ ':' + sys.argv[2] + '@localhost/workoutApp'
 	app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 	app.config['SECRET_KEY'] = 'dude'
 	app.secret_key = os.urandom(24)

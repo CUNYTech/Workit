@@ -3,7 +3,7 @@ sys.path.insert(0, '/home/russ/Desktop/workoutApp/api/backend')
 
 from model.users import User, db
 from datetime import datetime
-from model.workouts import Datetime, WorkoutName, DateUserWorkoutJoin, Execrise, ExerciseSetDateJoin, SetWeight
+from model.workouts import Datetime, WorkoutName, DateUserWorkoutJoin, Exercise, ExerciseSetDateJoin, SetWeight
 from flask import jsonify
 
 #--------------------------------------- File Description ------------------------------------------------------#
@@ -138,7 +138,7 @@ def enterExecrise(username, date, time, workoutName, execriseName, setNum = None
 			return {
 				"execirse": execrise,
 				"set" : setNum,
-				"weight" weight,
+				"weight" : weight,
 				"weightUnit": weightUnit,
 				"reps": reps
 				}
