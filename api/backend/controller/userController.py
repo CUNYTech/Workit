@@ -72,7 +72,7 @@ def verifyUser(username, password):
 	if user is None:
 		return {"username": "does not exists"}
 	
-	return user.checkPassword(password)
+	return {"user verified" : user.checkPassword(password)}
 
 # changes user's email address
 def changeEmail(username, email):
