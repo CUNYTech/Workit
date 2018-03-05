@@ -1,7 +1,0 @@
-**must install to run app!!!!**
-
-
-flask
-flask-sqlalchemy
-flask-httpauth
-passlib
