@@ -32,7 +32,7 @@ def createNewUser(username, email, password, fname, lname, gender, height, heigh
 	if userController.createUser(username, email, password, fname, lname, gender, height, heightUnit, weight, weightUnits, bmi):
 		return redirect("user/login/" + username + "/" + password)
 
-	return jsonify({"Failed": "create user"})
+	return jsonify({"create user": False})
 # change any of the user fields
 # email, username, password(not implemented yet), first name = fname, last name = lname
 @user.route("/update/username/<field>/<newChange>")

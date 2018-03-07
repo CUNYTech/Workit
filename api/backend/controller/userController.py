@@ -59,20 +59,18 @@ def createUser(username, email, password, fname, lname, gender, height, heightUn
 	db.session.commit()
 
 	if addWeight(username, weight, bmi, weightUnit):
-		return {"created": "true",
-				"username": username
-			}
+		True
 
-	return {"created": "failed to create"}
+	return False
 
 # check if user exist and password mathes
 def verifyUser(username, password):
 	user = User.query.filter_by(username = username).first()
 
 	if user is None:
-		return {"username": "does not exists"}
+		return {"verified": False}
 	
-	return {"user verified" : user.checkPassword(password)}
+	return {"verified" : user.checkPassword(password)}
 
 # changes user's email address
 def changeEmail(username, email):
