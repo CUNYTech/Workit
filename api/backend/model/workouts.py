@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0, '/home/russ/Desktop/workoutApp/api/backend/api/backend/model')
+import os
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 
 from .users import db, User
 
@@ -24,11 +25,11 @@ class WorkoutName(db.Model):
 	def __repr__(self):
 		return "<workoutNames(name='%s')>" %(self.name) 
 
-class exercise(db.Model):
+class Exercise(db.Model):
 	__tablename__ = 'exercises'
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	name = db.Column(db.String(200), unique=True, nullable=False)
-	exerciesSetDateJoin = db.relationship('ExercisSetDateJoin', backref='exercise', lazy=True)
+	exerciesSetDateJoin = db.relationship('ExerciseDateJoin', backref='exercise', lazy=True)
 
 	def __repr__(self):
 		return "<exercise(name = '%s')>" %(self.name)
@@ -41,7 +42,7 @@ class SetWeight(db.Model):
 	reps = db.Column(db.Integer)
 	weight = db.Column(db.Integer)
 	weightUnit = db.Column(db.String(80))
-	exerciesSetDateJoin = db.relationship('ExercisSetDateJoin', backref='exercise', lazy=True)
+	setExerciesDateJoin = db.relationship('SetExerciseDateJoin', backref='setWeight', lazy=True)
 
 	def __repr__(self):
 		return "<exercise(setNumber = '%s', reps = '%s', weight = '%s', weightUnit = '%s')>" %(self.setNumber, self.reps, self.weight, self.weightUnit)
@@ -53,17 +54,26 @@ class DateUserWorkoutJoin(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 	workoutName_id = db.Column(db.Integer, db.ForeignKey('workoutNames.id'))
 	datetime_id = db.Column(db.Integer, db.ForeignKey('datetimes.id'))
-	exerciesSetDateJoin = db.relationship('ExercisSetDateJoin', backref='exercise', lazy=True)
+	exerciesDateJoin = db.relationship('ExerciseDateJoin', backref='dateUserWorkoutJoin', lazy=True)
 
 	def __repr__(self):
 		return "<dateUserWorkoutJoins(user_id='%s', workoutName_id='%s', datetime_id='%s')>" %(self.user_id, self.workoutName_id, self.datetime_id)
 
-class ExerciseSetDateJoin(db.Model):
-	__tablename__ = 'exerciseSetDateJoins'
+class ExerciseDateJoin(db.Model):
+	__tablename__ = 'exerciseDateJoins'
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	dateJoin_id = db.Column(db.Integer, db.ForeignKey('dateUserWorkoutJoins.id'))
 	exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'))
+	setExerciesDateJoin = db.relationship('SetExerciseDateJoin', backref='exerciseDateJoin', lazy=True)
+	
+	def __repr__(self):
+		return "<exerciseDateJoins(dateJoin_id = '%s', exercise_id = '%s')>" %(self.dateJoin_id, self.exercise_id)
+
+class SetExerciseDateJoin(db.Model):
+	__tablename__ = 'setExerciseDateJoins'
+	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+	exerciseDateJoin_id = db.Column(db.Integer, db.ForeignKey('exerciseDateJoins.id')) 
 	setWeight_id =  db.Column(db.Integer, db.ForeignKey('setWeights.id'))
 
 	def __repr__(self):
-		return "<exerciseSetDateJoins(dateJoin_id = '%s', exercise_id = '%s', setWeight_id = '%s')>" %(self.dateJoin_id, self.exercise_id, self.setWeight_id)
+		return "<setExerciseDateJoins(exerciseDateJoin_id = '%s', setWeight_id = '%s')>" %(self.exerciseDateJoin_id, self.exercise_id)

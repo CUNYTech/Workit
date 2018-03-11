@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0, '/home/russ/Desktop/workoutApp/api')
+import os
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 
 import unittest
 from backend.controller import userController

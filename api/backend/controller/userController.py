@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0, '/home/russ/Desktop/workoutApp/api/backend')
+import os
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 
 from datetime import datetime
 from model.users import User, Weight, WeightUserJoin, db
@@ -117,20 +118,21 @@ def changeLastName(username, lName):
 			"Changed": "Last Name"
 	}
 
-# returns email address of user
-def getEmail(username):
-	user  = User.query.filter_by(username = username)
-	return {"email": user.email_address}
+# def getUserInfo(username):
+# 	now = datetime.now()
+# 	now = now.strftime(now,'%d-%m-%Y %I:%M%p')
+# 	user = username.query.filter_by(username = username).first()
+# 	weight
 
-# returns email address of user
-def getLastName(username):
-	user  = User.query.filter_by(username = username)
-	return {"Last Name": user.lname}
+# 	info = {"username": user.username,
+# 			"email" : user.email_address,
+# 			"First Name" : user.fname,
+# 			"Last Name" : user.lname,
+# 			"gender" : user.gender,
+# 			"height" : user.height,
+# 			"heightUnit" : user.heightUnit,
 
-# returns email address of user
-def getFirstName(username):
-	user  = User.query.filter_by(username = username)
-	return {"First Name": user.fname}
+# 	}	
 
 # under contruction
 # delete user
