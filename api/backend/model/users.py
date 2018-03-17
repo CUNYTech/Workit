@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import sha256_crypt
 from sqlalchemy.orm import validates
+from datetime import datetime
 
 
 #--------------------------------------- File Description ------------------------------------------------------#
@@ -20,10 +21,10 @@ class User(db.Model):
 	lname = db.Column(db.String(80), nullable=False)
 	email_address = db.Column(db.String(80), unique=True, nullable=False)
 	gender = db.Column(db.String(10), nullable=False)
-	height = db.Column(db.Integer, nullable=False)
+	height = db.Column(db.Float, nullable=False)
 	heightUnit = db.Column(db.String(10), nullable=False)
 	dateUserWorkoutJoins = db.relationship('DateUserWorkoutJoin', backref='user', lazy=True)
-	UserweightJoins = db.relationship('WeightUserJoin', backref='user', lazy=True)
+	userweightJoins = db.relationship('WeightUserJoin', backref='user', lazy=True)
 
 	
 	def __repr__(self):
@@ -64,26 +65,28 @@ class WorkoutName(db.Model):
 		return "<workoutNames(name='%s')>" %(self.name) 
 
 class Weight(db.Model):
-	__tablename___ = "weights"
+	__tablename__ = "weights"
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	weight = db.Column(db.Integer, nullable=False)
+	weight = db.Column(db.Float, nullable=False)
 	weightUnit = db.Column(db.String(80), nullable=False)
-	bmi = db.Column(db.Integer, nullable=False)
-	UserweightJoins = db.relationship('WeightUserJoin', backref='Weight', lazy=True)
+	bmi = db.Column(db.Float, nullable=False)
+	userweightJoins = db.relationship('WeightUserJoin', backref='weight', lazy=True)
 
 	def __repr__(self):
-		return "<weights(weight = '%s', unit = '%s', bmi = '%s')>" %(self.weight, self.weightUnit, self.bmi)
+		return "<weights(weight = '%s', weightUnit = '%s', bmi = '%s')>" %(self.weight, self.weightUnit, self.bmi)
 
 class WeightUserJoin(db.Model):
-	__tablename___ = "weightUserJoins"
+	__tablename__ = "weightUserJoins"
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+	date = db.Column(db.Date, default=datetime.now().date())
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 	weight_id = db.Column(db.Integer, db.ForeignKey('weights.id'))
 
-
+	def __repr__(self):
+		return "<weightUserjoins(user_id = '%s', weight_id = '%s' date = '%s')>" %(self.user_id, self.weight_id, self.date)
 
 class DateUserWorkoutJoin(db.Model):
-	__tablename___	= 'dateUserWorkoutJoins'
+	__tablename__	= 'dateUserWorkoutJoins'
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 	workoutName_id = db.Column(db.Integer, db.ForeignKey('workoutNames.id'))
