@@ -5,8 +5,9 @@ sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 from datetime import datetime
 from model.users import User, Weight, WeightUserJoin, db
 from passlib.hash import sha256_crypt
-from flask import jsonify
-
+from flask_api import status
+from sqlalchemy import desc
+import json
 
 
 
@@ -19,60 +20,67 @@ from flask import jsonify
 
 
 # add weight update entry
-def addWeight(username, weight, bmi, weightUnit, date=None):
-	user = User.query.filter_by(username = username).first()
-	checkWeight = Weight.query.filter_by(weight = weight, bmi = bmi, weightUnit = weightUnit).first()
+def addWeight(weight):
+	if not isinstance(weight, dict):
+		weight = json.loads(weight)
+
+	user = User.query.filter_by(username = weight["username"]).first()
+	checkWeight = Weight.query.filter_by(weight = weight["weight"], bmi = weight["bmi"], weightUnit = weight["weightUnit"]).first()
 
 	if user == None:
-		return False
+		return status.HTTP_404_NOT_FOUND
 
 	if checkWeight == None:
-		newWeight = Weight(weight = weight, bmi = bmi, weightUnit = weightUnit)
+		newWeight = Weight(weight = weight["weight"], bmi = weight["bmi"], weightUnit = weight["weightUnit"])
 		db.session.add(newWeight)
 		db.session.commit()
 
-	newWeightId = Weight.query.filter_by(weight = weight, bmi = bmi, weightUnit = weightUnit).first()
-	if date == None:
-		joinTables = WeightUserJoin(user_id = user.id, weight_id = newWeightId.id)
+	newWeightId = Weight.query.filter_by(weight = weight["weight"], bmi = weight["bmi"], weightUnit = weight["weightUnit"]).first()
+	
+	joinTables = WeightUserJoin(user_id = user.id, weight_id = newWeightId.id)
 
-	else:
-		joinTables = WeightUserJoin(user_id = user.id, weight_id = newWeightId.id, date = datetime.datetime.strptime(date, '%d%m%Y').date())
 
 	db.session.add(joinTables)
 	db.session.commit()
 
-	return True
+	return status.HTTP_201_CREATED
 
 # adds new user to the database
-def createUser(username, email, password, fname, lname, gender, height, heightUnit, weight, weightUnit, bmi):
-	checkEmail = User.query.filter_by(email_address = email)
-	checkUsername = User.query.filter_by(username = username)
+def createUser(user):
+	if not isinstance(user, dict):
+		user = json.loads(user)
+
+	checkEmail = User.query.filter_by(email_address = user["email"])
+	checkUsername = User.query.filter_by(username = user["username"])
 
 	if checkEmail.count() > 0:
-		return {"email": "exists"}
+		return status.HTTP_409_CONFLICT
 
 	if checkUsername.count() > 0:
-		return {"username": "exists"}
+		return status.HTTP_409_CONFLICT
 
-	newUser = User(username = username, password = sha256_crypt.hash(password), email_address = email, fname = fname, lname = lname, gender = gender, height = height, heightUnit = heightUnit)
+	newUser = User(username = user["username"], password = sha256_crypt.hash(user["password"]), email_address = user["email"], 
+		fname = user["fname"], lname = user["lname"], gender = user["gender"], height = user["height"], heightUnit = user["heightUnit"])
 	db.session.add(newUser)
 	db.session.commit()
 
-	if addWeight(username, weight, bmi, weightUnit):
-		return {"created": "true",
-				"username": username
-			}
+	if addWeight(user) == status.HTTP_201_CREATED:
+		return status.HTTP_201_CREATED
 
-	return {"created": "failed to create"}
+	return status.HTTP_417_EXPECTATION_FAILED
 
 # check if user exist and password mathes
 def verifyUser(username, password):
-	user = User.query.filter_by(username = username).first()
-
-	if user is None:
-		return {"username": "does not exists"}
 	
-	return user.checkPassword(password)
+	checkUser = User.query.filter_by(username = username).first()
+
+	if checkUser is None:
+		return HTTP_400_BAD_REQUEST
+	
+	if checkUser.checkPassword(password):
+		return status.HTTP_202_ACCEPTED
+
+	return HTTP_400_BAD_REQUEST
 
 # changes user's email address
 def changeEmail(username, email):
@@ -118,21 +126,44 @@ def changeLastName(username, lName):
 			"Changed": "Last Name"
 	}
 
-# def getUserInfo(username):
-# 	now = datetime.now()
-# 	now = now.strftime(now,'%d-%m-%Y %I:%M%p')
-# 	user = username.query.filter_by(username = username).first()
-# 	weight
+def getUserInfo(username):
+	user = username.query.filter_by(username = username).first()
+	weightJoin = WeightUserJoin.quey.filter_by(user_id = user.id).order_by(desc(WeightUserJoin.date)).first()
+	weight = Weight.query.filter_by(id = weight_id).first()
 
-# 	info = {"username": user.username,
-# 			"email" : user.email_address,
-# 			"First Name" : user.fname,
-# 			"Last Name" : user.lname,
-# 			"gender" : user.gender,
-# 			"height" : user.height,
-# 			"heightUnit" : user.heightUnit,
+	info = {"username": user.username,
+			"email" : user.email_address,
+			"First Name" : user.fname,
+			"Last Name" : user.lname,
+			"gender" : user.gender,
+			"height" : user.height,
+			"heightUnit" : user.heightUnit,
+			"weight" : weight.weight,
+			"weightUnit" : weight.weightUnit,
+			"bmi" : weight.bmi
+	}
 
-# 	}	
+	return info
+
+def getWeightProgress(username):
+	user = User.query.filter_by(username = username).first()
+	weightJoin = WeightUserJoin.query.filter_by(user_id = user.id).all()
+
+	progresses = []
+
+	for join in weightJoin:
+		getWeight = Weight.query.filter_by(id = join.weight_id).first()
+
+		weight = {
+				"date" : join.date,
+				"weight" : getWeight.weight,
+				"weightUnit" : getWeight.weightUnit,
+				"bmi" : getWeight.bmi
+		} 
+
+		progresses.append(weight)
+	print(progresses)
+	return progresses
 
 # under contruction
 # delete user

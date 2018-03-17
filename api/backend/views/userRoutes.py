@@ -4,7 +4,8 @@ sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 
 from controller import userController
 from model import users
-from flask import Blueprint,redirect,jsonify,session,g
+from flask import Blueprint,request,Response
+from flask_api import status
 
 user = Blueprint('user', __name__)
 
@@ -17,27 +18,21 @@ user = Blueprint('user', __name__)
 
 # NOTE must implement some sort of encryption for route url 
 # logging in
-@user.route("/login/<username>/<password>")
+@user.route("/login/<username>/<password>", methods = ['GET'])
 def userLogin(username, password):
 	#some logic to decrypt password
-	if userController.verifyUser(username,password):
-		return jsonify({"logged in" : username})
-
-	return jsonify({"Failed": "log in"})
+	return "",userController.verifyUser(username, password)
 
 
 # NOTE must implement some sort of encryption for route url 
 # creating new user
-@user.route("/new/<username>/<email>/<password>/<fname>/<lname>/<gender>/<height>/<heightUnit>/<weight>/<weightUnits>/<bmi>")
-def createNewUser(username, email, password, fname, lname, gender, height, heightUnit, weight, weightUnits, bmi):
-	
-	if userController.createUser(username, email, password, fname, lname, gender, height, heightUnit, weight, weightUnits, bmi):
-		return redirect("/login/" + username + "/" + password)
+@user.route("/new", methods = ['POST'])
+def createNewUser():
+	return "",userController.createUser(request.get_json()) 
 
-	return jsonify({"Failed": "create user"})
 # change any of the user fields
 # email, username, password(not implemented yet), first name = fname, last name = lname
-@user.route("/update/username/<field>/<newChange>")
+@user.route("/update/<username>/<field>/<newChange>")
 def updateUser(username, field, newChange):
 	
 	if field == "username":
@@ -59,11 +54,17 @@ def updateUser(username, field, newChange):
 	return jsonify({"error": "invalid field or username"})
 	
 	
+@user.route("/info/<username>", methods = ["GET"])
+def getInfo(username):
+	return jsonify(getUserInfo(username))
 
+@user.route("/new/weight/", methods = ["POST"])
+def addNewWeight():
+	return "", addWeight(request.get_json)
 
-@user.route("/new/weight/<username>/<weight>/<weightUnits>/<bmi>")
-def addNewWeight(username, weight, weightUnits, bmi):
-	return addWeight(username, weight, weightUnits, bmi)
+@user.route("/progress/weight/<username>", methods= ["GET"])
+def getUserWeightProgress(username):
+	return jsonify(getWeightProgress(username))
 
 @user.route("/get/username/weight/progress")
 def getProgress(username):
