@@ -55,10 +55,10 @@ public interface WorkoutAPI {
     Call<List<WeightLiftingSet>> getWeightLiftingProgress(@Path(value = "username", encoded = true) String username, @Path(value = "exercise", encoded = true) String exercise);
 
     @GET("/date/progress/{username}/cardio/{exercise}")
-    Call<List<WeightLiftingSet>> getCardioProgress(@Path(value = "username", encoded = true) String username, @Path(value = "exercise", encoded = true) String exercise);
+    Call<List<CardioSet>> getCardioProgress(@Path(value = "username", encoded = true) String username, @Path(value = "exercise", encoded = true) String exercise);
 
     @GET("/date/progress/{username}/calisthenic/{exercise}")
-    Call<List<WeightLiftingSet>> getCalisthenicProgress(@Path(value = "username", encoded = true) String username, @Path(value = "exercise", encoded = true) String exercise);
+    Call<List<CalisthenicSet>> getCalisthenicProgress(@Path(value = "username", encoded = true) String username, @Path(value = "exercise", encoded = true) String exercise);
 
 
 
