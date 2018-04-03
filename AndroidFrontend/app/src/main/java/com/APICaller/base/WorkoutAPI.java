@@ -1,12 +1,17 @@
 package com.APICaller.base;
 
 import com.APICaller.User.User;
+import com.APICaller.exercise.Exercise;
 import com.APICaller.schedule.Schedule;
-import com.APICaller.schedule.ScheduleList;
+import com.APICaller.sets.CalisthenicSet;
+import com.APICaller.sets.CardioSet;
+import com.APICaller.sets.WeightLiftingSet;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface WorkoutAPI {
@@ -25,4 +30,36 @@ public interface WorkoutAPI {
 
     @GET("/date/schedule/workout/{username}/{date}/{time}")
     Call<List<Schedule>> getSchedule(@Path(value = "username", encoded = true) String username, @Path(value = "date", encoded = true) String date, @Path(value = "time", encoded = true) String time);
+
+    // enter exercise
+    @Headers("Content-Type: application/json")
+    @POST("/date/new/exercise")
+    Call<ResponseBody> newWeightLifingSetPost(@Body Exercise newExercise);
+
+    //weight lifting
+    @Headers("Content-Type: application/json")
+    @POST("/date/new/exercise/set")
+    Call<ResponseBody> newWeightLifingSetPost(@Body ArrayList<WeightLiftingSet> newWeightLifting);
+
+    //cardio sets
+    @Headers("Content-Type: application/json")
+    @POST("/date/new/exercise/cardio")
+    Call<ResponseBody> newCardioSetPost(@Body ArrayList<CardioSet> newCardioSet);
+
+    //calisthenic sets
+    @Headers("Content-Type: application/json")
+    @POST("/date/new/exercise/calisthenic")
+    Call<ResponseBody> newCalisthenicSetPost(@Body ArrayList<CalisthenicSet> newCalisthenicSet);
+
+    @GET("/date/progress/{username}/weight_lifting/{exercise}")
+    Call<List<WeightLiftingSet>> getWeightLiftingProgress(@Path(value = "username", encoded = true) String username, @Path(value = "exercise", encoded = true) String exercise);
+
+    @GET("/date/progress/{username}/cardio/{exercise}")
+    Call<List<CardioSet>> getCardioProgress(@Path(value = "username", encoded = true) String username, @Path(value = "exercise", encoded = true) String exercise);
+
+    @GET("/date/progress/{username}/calisthenic/{exercise}")
+    Call<List<CalisthenicSet>> getCalisthenicProgress(@Path(value = "username", encoded = true) String username, @Path(value = "exercise", encoded = true) String exercise);
+
+
+
 }
