@@ -1,5 +1,6 @@
 package com.example.meghnapai.workoutapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -58,6 +59,15 @@ public class MainActivity extends AppCompatActivity {
             }}
         );
 
+        infoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              //  Intent SignInIntent = new Intent(MainActivity.this, ListViewActivity1.class);
+                Intent SignInIntent = new Intent(MainActivity.this, BodyListActivity.class);
+                MainActivity.this.startActivity(SignInIntent);
+            }}
+        );
+
         LogInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                                      if(response.code() == 202){
                                          loginInfo.setPassword(pass);
                                          loginInfo.setUsername(user);
-                                         Intent homepage = new Intent(MainActivity.this, CalendarActivity.class);
+                                         Intent homepage = new Intent(MainActivity.this, BodyListActivity.class);
                                          MainActivity.this.startActivity(homepage);
                                      }else{
                                          throwInavlidLogin();
@@ -114,26 +124,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-     //when I uncomment and run it, the app won't open
-//    public void logInOnCLick(View view) throws IOException, JSONException {
-//        Session loginInfo=new Session(this);
-//        final  EditText usernameTextEdit= (EditText) findViewById(R.id.usernameTextEdit);
-//        final EditText passwordTextEdit= (EditText) findViewById(R.id.passwordTextEdit);
-//
-//        String user= usernameTextEdit.getText().toString();
-//        String pass=passwordTextEdit.getText().toString();
-//
-//        Login login = new Login (user, pass);
-//
-//        JSONObject verifyUser = login.login();
-//        verifyUser.get("verified");
-//
-//        loginInfo.setUsername(user);
-//        loginInfo.setPassword(pass);
-//
-//        Intent homepage = new Intent(MainActivity.this, Homepage.class);
-//        MainActivity.this.startActivity(homepage);
-//    }
 
 
 
