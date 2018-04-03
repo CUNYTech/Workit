@@ -27,7 +27,11 @@
 
         <receiver android:name="com.apicaller.schedule.ScheduleNotification" />
 
-        <activity android:name=".BodyPartActivity" />
+        <activity android:name=".ListViewActivity1" />
+        <activity android:name=".BodyListActivity" />
+        <activity android:name=".WeightsActivity" />
+        <activity android:name=".ListViewActivityBiceps" />
+        <activity android:name=".ListViewActivityTriceps"></activity>
     </application>
 
 </manifest>

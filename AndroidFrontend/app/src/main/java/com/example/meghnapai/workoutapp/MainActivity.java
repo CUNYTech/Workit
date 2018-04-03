@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         SignUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent SignInIntent = new Intent(MainActivity.this, CalendarActivity.class);
+                Intent SignInIntent = new Intent(MainActivity.this, RegisterActivity.class);
                 MainActivity.this.startActivity(SignInIntent);
             }}
         );
@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         infoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent SignInIntent = new Intent(MainActivity.this, BodyPartActivity.class);
+              //  Intent SignInIntent = new Intent(MainActivity.this, ListViewActivity1.class);
+                Intent SignInIntent = new Intent(MainActivity.this, BodyListActivity.class);
                 MainActivity.this.startActivity(SignInIntent);
             }}
         );
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                                      if(response.code() == 202){
                                          loginInfo.setPassword(pass);
                                          loginInfo.setUsername(user);
-                                         Intent homepage = new Intent(MainActivity.this, CalendarActivity.class);
+                                         Intent homepage = new Intent(MainActivity.this, BodyListActivity.class);
                                          MainActivity.this.startActivity(homepage);
                                      }else{
                                          throwInavlidLogin();
