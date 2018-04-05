@@ -25,7 +25,7 @@
         <activity android:name=".Homepage" />
         <activity android:name=".WorkoutLog" />
 
-        <receiver android:name="com.apicaller.schedule.ScheduleNotification" />
+        <receiver android:name="com.example.meghnapai.workoutapp.ScheduleNotification" />
 
         <activity android:name=".ListViewActivity1" />
         <activity android:name=".BodyListActivity" />
