@@ -37,7 +37,7 @@ def enterCalisthenic():
 
 @dates.route("/progress/<username>/<tag>/<exercise>", methods = ["GET"])
 def getProgess(username, exercise, tag):
-	if tag.lower() == "weight_lifting":
+	if tag.lower() == "weight lifting":
 		return jsonify(DatesController.getWeightLiftingProgress(username, exercise))
 	elif tag.lower() == "cardio":
 		return jsonify(DatesController.getCardioProgress(username, exercise))
