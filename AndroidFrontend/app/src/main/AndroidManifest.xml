@@ -24,14 +24,9 @@
         <activity android:name=".CalendarActivity" />
         <activity android:name=".Homepage" />
         <activity android:name=".WorkoutLog" />
+        <activity android:name=".BodyPartActivity" />
 
-        <receiver android:name="com.apicaller.schedule.ScheduleNotification" />
-
-        <activity android:name=".ListViewActivity1" />
-        <activity android:name=".BodyListActivity" />
-        <activity android:name=".WeightsActivity" />
-        <activity android:name=".ListViewActivityBiceps" />
-        <activity android:name=".ListViewActivityTriceps"></activity>
+        <receiver android:name="com.example.meghnapai.workoutapp.ScheduleNotification" />
     </application>
 
 </manifest>

@@ -135,6 +135,7 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         notification.set(Calendar.MONTH, _month);
         notification.set(Calendar.HOUR,_hour);
         notification.set(Calendar.MINUTE, _minute);
+        Calendar notification2 = notification;
         String date = String.valueOf(_day) + '-' + String.valueOf(_month) + '-' + String.valueOf(_year);
         String _time = time.getText().toString().replace(" ","");
         System.out.println(_time);
@@ -176,7 +177,7 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(),111,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, notification.getTimeInMillis(), alarmIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, notification2.getTimeInMillis(), alarmIntent);
         //include AlarmManager after Millis to set up intervals
     }
 
