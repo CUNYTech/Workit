@@ -34,6 +34,9 @@ def enterCardio():
 def enterCalisthenic():
 	return '', DatesController.enterCalisthenic(request.get_json())
 
+@dates.route("/get/exercises/<bodyPart>", moeths= ["GET"])
+def getExercie(bodyPart):
+	return jsonify(DatesController.getExerciseByBodyPart(bodyPart))
 
 @dates.route("/progress/<username>/<tag>/<exercise>", methods = ["GET"])
 def getProgess(username, exercise, tag):

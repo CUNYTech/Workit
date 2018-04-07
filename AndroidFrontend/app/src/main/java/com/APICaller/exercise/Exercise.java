@@ -12,6 +12,8 @@ public class Exercise {
     private String username;
     @SerializedName("date")
     private String date;
+    @SerializedName("bodyPart")
+    private String bodyPart;
     @SerializedName("time")
     private String time;
     @SerializedName("workout")
@@ -21,9 +23,10 @@ public class Exercise {
     @SerializedName("tag")
     private String tag;
 
-    public Exercise(String username, String date, String time, String workout, String exerciseName, String tag) {
+    public Exercise(String username, String date, String bodyPart, String time, String workout, String exerciseName, String tag) {
         this.username = username;
         this.date = date;
+        this.bodyPart = bodyPart;
         this.time = time;
         this.workout = workout;
         this.exerciseName = exerciseName;

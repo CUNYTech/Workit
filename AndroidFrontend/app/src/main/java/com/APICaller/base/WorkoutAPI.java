@@ -60,6 +60,7 @@ public interface WorkoutAPI {
     @GET("/date/progress/{username}/calisthenic/{exercise}")
     Call<List<CalisthenicSet>> getCalisthenicProgress(@Path(value = "username", encoded = true) String username, @Path(value = "exercise", encoded = true) String exercise);
 
-
+    @GET("/date/get/exercises/{bodyPart}")
+    Call<List<String>> getExerciseByBodyPart(@Path(value = "bodyPart", encoded = true) String bodyPart);
 
 }
