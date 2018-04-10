@@ -417,11 +417,16 @@ def getExerciseByBodyPart(bodyPart):
 	part = BodyPart.query.filter_by(name = bodyPart).first()
 
 	joinTable = BodyPartExerciseJoin.query.filter_by(bodyPart_id = part.id).all()
-
+	print("Something",joinTable)
 	exercises = []
 	for exerciseId in joinTable:
-		getExercise = Exercise.query.filter_by(id = exerciseId).first()
-		exercises.append(getExercise.name)
+		getExercise = Exercise.query.filter_by(id = exerciseId.exercise_id).first()
+		exercise = {
+			"name" : getExercise.name
+		}
+		exercises.append(exercise)
+
+	print(exercises)
 
 	return exercises
 

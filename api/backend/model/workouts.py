@@ -74,7 +74,7 @@ class BodyPartExerciseJoin(db.Model):
 
 
 	def __repr__(self):
-		return "<bodyPartExerciseJoins(exercise_id = '%s', exercise_id = '%s')>" %(self.exercise_id, self.exercise_id)
+		return "<bodyPartExerciseJoins(exercise_id = '%s', bodyPart_id = '%s')>" %(self.exercise_id, self.bodyPart_id)
 
 class SetWeight(db.Model):
 	__tablename__ = 'setWeights'

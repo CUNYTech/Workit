@@ -2,6 +2,7 @@ package com.APICaller.base;
 
 import com.APICaller.User.User;
 import com.APICaller.exercise.Exercise;
+import com.APICaller.exercise.GetExercise;
 import com.APICaller.schedule.Schedule;
 import com.APICaller.sets.CalisthenicSet;
 import com.APICaller.sets.CardioSet;
@@ -61,6 +62,6 @@ public interface WorkoutAPI {
     Call<List<CalisthenicSet>> getCalisthenicProgress(@Path(value = "username", encoded = true) String username, @Path(value = "exercise", encoded = true) String exercise);
 
     @GET("/date/get/exercises/{bodyPart}")
-    Call<List<String>> getExerciseByBodyPart(@Path(value = "bodyPart", encoded = true) String bodyPart);
+    Call<List<GetExercise>> getExerciseByBodyPart(@Path(value = "bodyPart", encoded = true) String bodyPart);
 
 }
