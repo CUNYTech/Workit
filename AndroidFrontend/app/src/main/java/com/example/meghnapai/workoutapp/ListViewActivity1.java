@@ -3,6 +3,8 @@ package com.example.meghnapai.workoutapp;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +23,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.APICaller.exercise.GetExercise;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -38,12 +42,17 @@ public class ListViewActivity1 extends AppCompatActivity implements ExerciseDial
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String [] default_exercise_shoulders={"Arnold Press","Dumbbell Front Raise", "Dumbbell Side Lateral Raise", "Dumbbell Rear Lateral Raise", "Barbell Rear Delt Row"};
+       // String [] default_exercise_shoulders={"Arnold Press","Dumbbell Front Raise", "Dumbbell Side Lateral Raise", "Dumbbell Rear Lateral Raise", "Barbell Rear Delt Row"};
+
+        Bundle extras = getIntent().getExtras();
+        String bodyPart = extras.getString("shoulders");
+        ArrayList<String> exercises = getIntent().getStringArrayListExtra("Shoulders");
+
 
         listvw = (ListView) findViewById(R.id.listvw);
 
-        arrayList = new ArrayList<>(Arrays.asList(default_exercise_shoulders));
-        adapter= new ArrayAdapter<String>(this, R.layout.custom_listview_ex,R.id.textView,arrayList);
+        ///arrayList = new ArrayList<>(Arrays.asList(exercises));
+        adapter= new ArrayAdapter<String>(this, R.layout.custom_listview_ex,R.id.textView,exercises);
        // adapter=new ArrayAdapter<String>(this,R.layout.)
 
         //sendng over these values to the constructor in customAdaptorexercise

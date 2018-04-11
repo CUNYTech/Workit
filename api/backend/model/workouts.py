@@ -31,10 +31,20 @@ class Exercise(db.Model):
 	name = db.Column(db.String(200), unique=True, nullable=False)
 	tag = db.Column(db.String(200), unique=True, nullable=False)
 	exerciesSetDateJoin = db.relationship('ExerciseDateJoin', backref='exercise', lazy=True)
+	bodyPartExerciseJoin = db.relationship('BodyPartExerciseJoin', backref='exercise', lazy=True)
 	
 
 	def __repr__(self):
 		return "<exercise(name = '%s')>" %(self.name)
+
+class BodyPart(db.Model):
+	__tablename__ = 'bodyParts'
+	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+	name = db.Column(db.String(200), unique=True, nullable=False)
+	bodyPartExerciseJoin = db.relationship('BodyPartExerciseJoin', backref='bodyPart', lazy=True)
+
+	def __repr__(self):
+		return "<bodyParts(name = '%s')>" %(self.name)
 
 class CalisthenicSet(db.Model):
 	__tablename__ = 'calisthenicSets'
@@ -55,6 +65,16 @@ class CardioSet(db.Model):
 
 	def __repr__(self):
 		return "<cardioSets(setNumber = '%s', reps = '%s')>" %(self.length, self.lengthUnit)
+
+class BodyPartExerciseJoin(db.Model):
+	__tablename__ = 'bodyPartExerciseJoins'
+	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+	exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'))
+	bodyPart_id = db.Column(db.Integer, db.ForeignKey('bodyParts.id'))
+
+
+	def __repr__(self):
+		return "<bodyPartExerciseJoins(exercise_id = '%s', bodyPart_id = '%s')>" %(self.exercise_id, self.bodyPart_id)
 
 class SetWeight(db.Model):
 	__tablename__ = 'setWeights'
