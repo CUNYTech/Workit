@@ -91,5 +91,75 @@ class ScheduleWorkout(unittest.TestCase):
 		self.assertTrue(getBodyExerciseJoin is not None)
 
 
+class newExercise(unittest.TestCase):
+	def setUp(self):
+		app = create_app()
+		app.config['TESTING'] = True
+		self.app = app.test_client()
+		app.app_context().push()
+		users.db.create_all()
+		
+	def tearDown(self):
+		users.db.session.remove()
+		users.db.drop_all()
+	
+	# checks if user was created
+	def test_newExercise(self):
+		exercise = {
+			"exerciseName" : "chest press",
+			"tag" : "weight lifting",
+			"bodyPart" : ["chest"]
+		}
+
+		DatesController.newExercise(exercise)
+		getExercise = workouts.Exercise.query.filter_by(name = "chest Press").first()
+
+		getPart1 = workouts.BodyPart.query.filter_by(name = "chest").first()
+		getBodyExerciseJoin = workouts.BodyPartExerciseJoin.query.filter_by(exercise_id = getExercise.id, bodyPart_id =getPart1.id).first()
+
+		self.assertTrue(getExercise is not None)
+		self.assertTrue(getExercise.name == "chest press")
+		self.assertTrue(getPart1.name == "chest")
+		self.assertTrue(getBodyExerciseJoin is not None)
+
+
+class newExerciseRoutes(unittest.TestCase):
+	def setUp(self):
+		app = create_app()
+		app.config['TESTING'] = True
+		self.app = app.test_client()
+		app.app_context().push()
+		users.db.create_all()
+		
+	def tearDown(self):
+		users.db.session.remove()
+		users.db.drop_all()
+	
+	# checks if user was created
+	def test_newExerciseRoutes(self):
+		exercise = {
+			"exerciseName" : "chest press",
+			"tag" : "weight lifting",
+			"bodyPart" : ["chest"]
+		}
+
+		# DatesController.newExercise(exercise)
+		
+
+		
+		response = self.app.post('/date/new/exercise',data=json.dumps(exercise), content_type='application/json', follow_redirects=True)
+		
+		getExercise = workouts.Exercise.query.filter_by(name = "chest Press").first()
+		getPart1 = workouts.BodyPart.query.filter_by(name = "chest").first()
+		getBodyExerciseJoin = workouts.BodyPartExerciseJoin.query.filter_by(exercise_id = getExercise.id, bodyPart_id =getPart1.id).first()
+		checkUser = user = users.User.query.filter_by(username = 'bob123').first()
+		
+		self.assertTrue(response.status_code == 201)
+		self.assertTrue(checkUser is None)
+		self.assertTrue(getExercise is not None)
+		self.assertTrue(getExercise.name == "chest press")
+		self.assertTrue(getPart1.name == "chest")
+		self.assertTrue(getBodyExerciseJoin is not None)
+
 if __name__ == '__main__':
 	unittest.main()  

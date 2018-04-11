@@ -19,8 +19,13 @@ def getSchedule(username, curDate, curTime):
 	return jsonify(DatesController.getUserSchedule(username, curDate, curTime))
 
 @dates.route("/new/exercise", methods = ["POST"])
-def enterExercise():		
-	return '', DatesController.enterExercise(request.get_json())
+def enterExercise():
+	checkKey = request.get_json()
+	if 'username' in checkKey:		
+		return '', DatesController.enterExercise(request.get_json())
+		
+	else:
+		return '', DatesController.newExercise(request.get_json())
 
 @dates.route("/new/exercise/set", methods = ["POST"])
 def enterWeight():

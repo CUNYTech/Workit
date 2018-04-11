@@ -175,6 +175,63 @@ def enterExercise(exercise):
 	#print(ExerciseDateJoin.query.filter_by(dateJoin_id = dateJoinTable.id, exercise_id = newExercise.id).first())
 	return status.HTTP_201_CREATED
 
+def newExercise(exercise):
+	if not isinstance(exercise, dict):
+		exercise = json.loads(exercise)
+
+	getExercise = Exercise.query.filter_by(name = exercise["exerciseName"]).first()
+
+	if getExercise is not None:
+		for part in exercise["bodyPart"]:
+			checkPart = BodyPart.query.filter_by(name = part).first()
+
+			if checkPart is not None:
+				checkJoin = BodyPartExerciseJoin.query.filter_by(bodyPart_id = checkPart.id, exercise_id = getExercise.id).first()
+
+				if checkJoin is None:
+					newBodyPartExercieJoin = BodyPartExerciseJoin(bodyPart_id = checkPart.id, exercise_id = getExercise.id)
+					db.session.add(newBodyPartExercieJoin)
+					db.session.commit()
+
+			else:
+				newPart = BodyPart(name = part)
+				db.session.add(newPart)
+				db.session.commit()
+
+				newBodyPartExercieJoin = BodyPartExerciseJoin(bodyPart_id = newPart.id, exercise_id = newExercise.id)
+				db.session.add(newBodyPartExercieJoin)
+				db.session.commit()
+
+		return status.HTTP_201_CREATED
+
+	newExercise = Exercise(name = exercise["exerciseName"], tag = exercise["tag"])
+	db.session.add(newExercise)
+	db.session.commit()
+
+	for part in exercise["bodyPart"]:
+		checkPart = BodyPart.query.filter_by(name = part).first()
+
+		if checkPart is not None:
+			checkJoin = BodyPartExerciseJoin.query.filter_by(bodyPart_id = checkPart.id, exercise_id = newExercise.id).first()
+
+			if checkJoin is None:
+				newBodyPartExercieJoin = BodyPartExerciseJoin(bodyPart_id = checkPart.id, exercise_id = newExercise.id)
+				db.session.add(newBodyPartExercieJoin)
+				db.session.commit()
+
+		else:
+			newPart = BodyPart(name = part)
+			db.session.add(newPart)
+			db.session.commit()
+
+			newBodyPartExercieJoin = BodyPartExerciseJoin(bodyPart_id = newPart.id, exercise_id = newExercise.id)
+			db.session.add(newBodyPartExercieJoin)
+			db.session.commit()
+	# print(Exercise.query.filter_by(name = exercise["exerciseName"]).first())
+	return status.HTTP_201_CREATED
+
+
+
 #only for weight lifting
 def enterSetWeight(exerciseSet):
 	# if not isinstance(exerciseSet, dict):
