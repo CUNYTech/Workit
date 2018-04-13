@@ -29,7 +29,7 @@ class Exercise(db.Model):
 	__tablename__ = 'exercises'
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	name = db.Column(db.String(200), unique=True, nullable=False)
-	tag = db.Column(db.String(200), unique=True, nullable=False)
+	tag = db.Column(db.String(200), nullable=False)
 	exerciesSetDateJoin = db.relationship('ExerciseDateJoin', backref='exercise', lazy=True)
 	bodyPartExerciseJoin = db.relationship('BodyPartExerciseJoin', backref='exercise', lazy=True)
 	

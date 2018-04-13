@@ -23,17 +23,31 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.APICaller.base.WorkoutAPI;
 import com.APICaller.exercise.GetExercise;
+import com.APICaller.exercise.PostExercise;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ListViewActivity1 extends AppCompatActivity implements ExerciseDialog.ExerciseDialogListener {
 
     private ArrayList<String> arrayList;
     private ArrayAdapter<String> adapter;
-    String newExercise;
+    //String newExercise;
     ListView listvw;
+    TextView toolbarTitle;
+    ArrayList<String> exercises;
+    String bodyPart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +59,12 @@ public class ListViewActivity1 extends AppCompatActivity implements ExerciseDial
        // String [] default_exercise_shoulders={"Arnold Press","Dumbbell Front Raise", "Dumbbell Side Lateral Raise", "Dumbbell Rear Lateral Raise", "Barbell Rear Delt Row"};
 
         Bundle extras = getIntent().getExtras();
-        String bodyPart = extras.getString("shoulders");
-        ArrayList<String> exercises = getIntent().getStringArrayListExtra("Shoulders");
+
+        bodyPart = extras.getString("bodyPartName");
+        exercises = getIntent().getStringArrayListExtra("BodyPart");
+
+        toolbarTitle=(TextView) findViewById(R.id.title);
+        toolbarTitle.setText(bodyPart);
 
 
         listvw = (ListView) findViewById(R.id.listvw);
@@ -101,12 +119,47 @@ public class ListViewActivity1 extends AppCompatActivity implements ExerciseDial
 
      //for the pop-up
     @Override
-    public void applyTexts(String nexercise) {
-         newExercise=nexercise;
+    public void applyTexts(final String nexercise) {
+
          //Toast.makeText(ListViewActivity1.this,nexercise,Toast.LENGTH_SHORT).show();
          //this is where the new item is being added
-         arrayList.add(newExercise);
-        adapter.notifyDataSetChanged();
+
+        PostExercise newExercise;
+        String[] bodyParts = {bodyPart.toLowerCase()};
+        if(bodyPart == "cardio"){
+            newExercise = new PostExercise(nexercise, bodyParts, "cardio");
+        }else{
+            newExercise = new PostExercise(nexercise, bodyParts, "weight lifting");
+        }
+
+
+        OkHttpClient httpClient = new OkHttpClient();
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(WorkoutAPI.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient);
+
+        Retrofit retrofit = builder.build();
+        WorkoutAPI requests = retrofit.create(WorkoutAPI.class);
+
+        Gson gson = new Gson();
+        //System.out.println(gender);
+        Call<ResponseBody> call = requests.newExercise(newExercise);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code() == 201) {
+                    //newExercise=nexercise;
+                    exercises.add(nexercise);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                System.out.printf("Throws: " + t);
+            }
+        });
 
     }
 
