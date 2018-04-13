@@ -2,9 +2,10 @@
 DROP TABLE cardioExerciseDateJoins;
 DROP TABLE calisthenicExerciseDateJoins;
 DROP TABLE setExerciseDateJoins;
-
+DROP TABLE bodyPartExerciseJoins
 DROP TABLE exerciseDateJoins;
 DROP TABLE dateUserWorkoutJoins;
+DROP TABLE bodyParts;
 DROP TABLE setWeights;
 DROP TABLE cardioSets;
 DROP TABLE calisthenicSets;

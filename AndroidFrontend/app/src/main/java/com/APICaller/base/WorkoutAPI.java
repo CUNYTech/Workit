@@ -2,6 +2,8 @@ package com.APICaller.base;
 
 import com.APICaller.User.User;
 import com.APICaller.exercise.Exercise;
+import com.APICaller.exercise.GetExercise;
+import com.APICaller.exercise.PostExercise;
 import com.APICaller.schedule.Schedule;
 import com.APICaller.sets.CalisthenicSet;
 import com.APICaller.sets.CardioSet;
@@ -60,6 +62,11 @@ public interface WorkoutAPI {
     @GET("/date/progress/{username}/calisthenic/{exercise}")
     Call<List<CalisthenicSet>> getCalisthenicProgress(@Path(value = "username", encoded = true) String username, @Path(value = "exercise", encoded = true) String exercise);
 
+    @GET("/date/get/exercises/{bodyPart}")
+    Call<List<GetExercise>> getExerciseByBodyPart(@Path(value = "bodyPart", encoded = true) String bodyPart);
+
+    @POST("/date/new/exercise")
+    Call<ResponseBody> newExercise(@Body PostExercise exercise);
 
 
 }

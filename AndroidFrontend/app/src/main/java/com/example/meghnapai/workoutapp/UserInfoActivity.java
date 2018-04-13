@@ -102,7 +102,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
         User newUser = new User(username,password,email, firstname, lastname, gender, WEIGHT, weightUnit, HEIGHT,heightUnit);
         Gson gson = new Gson();
-        System.out.println(gender);
+        //System.out.println(gender);
         Call<ResponseBody> call = requests.createNewUser(newUser);
         call.enqueue(new Callback<ResponseBody>() {
             @Override

@@ -19,8 +19,13 @@ def getSchedule(username, curDate, curTime):
 	return jsonify(DatesController.getUserSchedule(username, curDate, curTime))
 
 @dates.route("/new/exercise", methods = ["POST"])
-def enterExercise():		
-	return '', DatesController.enterExercise(request.get_json())
+def enterExercise():
+	checkKey = request.get_json()
+	if 'username' in checkKey:		
+		return '', DatesController.enterExercise(request.get_json())
+		
+	else:
+		return '', DatesController.newExercise(request.get_json())
 
 @dates.route("/new/exercise/set", methods = ["POST"])
 def enterWeight():
@@ -34,6 +39,9 @@ def enterCardio():
 def enterCalisthenic():
 	return '', DatesController.enterCalisthenic(request.get_json())
 
+@dates.route("/get/exercises/<bodyPart>", methods= ["GET"])
+def getExercie(bodyPart):
+	return jsonify(DatesController.getExerciseByBodyPart(bodyPart))
 
 @dates.route("/progress/<username>/<tag>/<exercise>", methods = ["GET"])
 def getProgess(username, exercise, tag):
