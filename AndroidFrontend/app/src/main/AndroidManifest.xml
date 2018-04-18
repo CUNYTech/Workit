@@ -28,8 +28,9 @@
         <activity android:name=".CalendarActivity" />
         <activity android:name=".Homepage"></activity>
         <activity android:name=".WorkoutLog"></activity>
+        <activity android:name=".WeightsAndRepsActivity"></activity>
 
-        <receiver android:name="com.apicaller.schedule.ScheduleNotification"></receiver>
+        <receiver android:name=".ScheduleNotification"></receiver>
 
     </application>
 
