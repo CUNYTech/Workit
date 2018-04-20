@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
               //  Intent SignInIntent = new Intent(MainActivity.this, ListViewActivity1.class);
-                Intent SignInIntent = new Intent(MainActivity.this, WeightsAndRepsActivity.class);
+                Intent SignInIntent = new Intent(MainActivity.this, BodyListActivity.class);
                 MainActivity.this.startActivity(SignInIntent);
             }}
         );

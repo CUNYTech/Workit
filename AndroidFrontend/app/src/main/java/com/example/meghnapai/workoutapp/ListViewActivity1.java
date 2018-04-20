@@ -3,8 +3,6 @@ package com.example.meghnapai.workoutapp;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
-import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,31 +21,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.APICaller.base.WorkoutAPI;
-import com.APICaller.exercise.GetExercise;
-import com.APICaller.exercise.PostExercise;
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ListViewActivity1 extends AppCompatActivity implements ExerciseDialog.ExerciseDialogListener {
 
     private ArrayList<String> arrayList;
     private ArrayAdapter<String> adapter;
-    //String newExercise;
+    String newExercise;
+    String Category;
     ListView listvw;
-    TextView toolbarTitle;
-    ArrayList<String> exercises;
-    String bodyPart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,30 +39,22 @@ public class ListViewActivity1 extends AppCompatActivity implements ExerciseDial
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       // String [] default_exercise_shoulders={"Arnold Press","Dumbbell Front Raise", "Dumbbell Side Lateral Raise", "Dumbbell Rear Lateral Raise", "Barbell Rear Delt Row"};
-
-        Bundle extras = getIntent().getExtras();
-
-        bodyPart = extras.getString("bodyPartName");
-        exercises = getIntent().getStringArrayListExtra("BodyPart");
-
-        toolbarTitle=(TextView) findViewById(R.id.title);
-        toolbarTitle.setText(bodyPart);
-
+        String [] default_exercise_shoulders={"Arnold Press","Dumbbell Front Raise", "Dumbbell Side Lateral Raise", "Dumbbell Rear Lateral Raise", "Barbell Rear Delt Row"};
 
         listvw = (ListView) findViewById(R.id.listvw);
 
-        ///arrayList = new ArrayList<>(Arrays.asList(exercises));
-        adapter= new ArrayAdapter<String>(this, R.layout.custom_listview_ex,R.id.textView,exercises);
-       // adapter=new ArrayAdapter<String>(this,R.layout.)
+        arrayList = new ArrayList<>(Arrays.asList(default_exercise_shoulders));
+        adapter= new ArrayAdapter<String>(this, R.layout.custom_listview_ex,R.id.textView,arrayList);
+        // adapter=new ArrayAdapter<String>(this,R.layout.)
 
         //sendng over these values to the constructor in customAdaptorexercise
-       // ListAdapter list = new CustomAdapterExercise(this, default_exercise_shoulders);
+        // ListAdapter list = new CustomAdapterExercise(this, default_exercise_shoulders);
         listvw.setAdapter(adapter);
         listvw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String exercise=String.valueOf(adapterView.getItemAtPosition(position));
+
                 Toast.makeText(ListViewActivity1.this, exercise, Toast.LENGTH_SHORT).show();
             }
         });
@@ -87,79 +62,44 @@ public class ListViewActivity1 extends AppCompatActivity implements ExerciseDial
     }
 
     // the next two methods are for the toolbar and the add button
-     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-     {
-         MenuInflater inflater=getMenuInflater();
-         inflater.inflate(R.menu.toolbar_ex_menu,menu);
-         return true; //super.onCreateOptionsMenu(menu);
-     }
-
-     @Override
-     public boolean onOptionsItemSelected(MenuItem item){
-
-         switch (item.getItemId())
-         {
-             case R.id.action_add:
-             openDialog();
-             break;
-
-             case R.id.action_delete:
-                 removeItem();
-                 return true;
-         }
-         return super.onOptionsItemSelected(item);
-     }
-
-     // for the pop-up
-     public void openDialog(){
-         ExerciseDialog exerciseDialog = new ExerciseDialog();
-          exerciseDialog.show(getSupportFragmentManager(), "Exercise Dialog");
-     }
-
-     //for the pop-up
     @Override
-    public void applyTexts(final String nexercise) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.toolbar_ex_menu,menu);
+        return true; //super.onCreateOptionsMenu(menu);
+    }
 
-         //Toast.makeText(ListViewActivity1.this,nexercise,Toast.LENGTH_SHORT).show();
-         //this is where the new item is being added
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
 
-        PostExercise newExercise;
-        String[] bodyParts = {bodyPart.toLowerCase()};
-        if(bodyPart == "cardio"){
-            newExercise = new PostExercise(nexercise, bodyParts, "cardio");
-        }else{
-            newExercise = new PostExercise(nexercise, bodyParts, "weight lifting");
+        switch (item.getItemId())
+        {
+            case R.id.action_add:
+                openDialog();
+                break;
+
+            case R.id.action_delete:
+                removeItem();
+                return true;
         }
+        return super.onOptionsItemSelected(item);
+    }
 
+    // for the pop-up
+    public void openDialog(){
+        ExerciseDialog exerciseDialog = new ExerciseDialog();
+        exerciseDialog.show(getSupportFragmentManager(), "Exercise Dialog");
+    }
 
-        OkHttpClient httpClient = new OkHttpClient();
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(WorkoutAPI.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient);
-
-        Retrofit retrofit = builder.build();
-        WorkoutAPI requests = retrofit.create(WorkoutAPI.class);
-
-        Gson gson = new Gson();
-        //System.out.println(gender);
-        Call<ResponseBody> call = requests.newExercise(newExercise);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.code() == 201) {
-                    //newExercise=nexercise;
-                    exercises.add(nexercise);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                System.out.printf("Throws: " + t);
-            }
-        });
+    //for the pop-up
+    @Override
+    public void applyTexts(String nexercise, String ncategory) {
+        newExercise=nexercise;
+        Category=ncategory;
+        Toast.makeText(ListViewActivity1.this,Category,Toast.LENGTH_SHORT).show();
+        arrayList.add(newExercise);
+        adapter.notifyDataSetChanged();
 
     }
 
