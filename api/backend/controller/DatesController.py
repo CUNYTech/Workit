@@ -119,25 +119,26 @@ def enterExercise(exercise):
 
 
 	if checkExercise is not None:
-		for part in exercise["bodyPart"]:
+		if 'bodyPart' in exercise:
+			for part in exercise["bodyPart"]:
 
-			checkPart = BodyPart.query.filter_by(name = part).first()
-			if checkPart is not None:
-				checkJoin = BodyPartExerciseJoin.query.filter_by(bodyPart_id = checkPart.id, exercise_id = newExercise.id).first()
+				checkPart = BodyPart.query.filter_by(name = part).first()
+				if checkPart is not None:
+					checkJoin = BodyPartExerciseJoin.query.filter_by(bodyPart_id = checkPart.id, exercise_id = newExercise.id).first()
 
-				if checkJoin is None:
-					newBodyPartExercieJoin = BodyPartExerciseJoin(bodyPart_id = checkPart.id, exercise_id = newExercise.id)
-					db.session.add(newBodyPartExercieJoin)
+					if checkJoin is None:
+						newBodyPartExercieJoin = BodyPartExerciseJoin(bodyPart_id = checkPart.id, exercise_id = newExercise.id)
+						db.session.add(newBodyPartExercieJoin)
+						db.session.commit()
+
+				else:
+					newPart = BodyPart(name = part)
+					db.session.add(newPart)
 					db.session.commit()
 
-			else:
-				newPart = BodyPart(name = part)
-				db.session.add(newPart)
-				db.session.commit()
-
-				newBodyPartExercieJoin = BodyPartExerciseJoin(bodyPart_id = newPart.id, exercise_id = newExercise.id)
-				db.session.add(newBodyPartExercieJoin)
-				db.session.commit()
+					newBodyPartExercieJoin = BodyPartExerciseJoin(bodyPart_id = newPart.id, exercise_id = newExercise.id)
+					db.session.add(newBodyPartExercieJoin)
+					db.session.commit()
 
 		newExerciseJoin = ExerciseDateJoin(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id)
 		db.session.add(newExerciseJoin)
@@ -149,22 +150,22 @@ def enterExercise(exercise):
 	db.session.add(newExercise)
 	
 	db.session.commit()
+	if 'bodyPart' in exercise:
+		for part in exercise["bodyPart"]:
+			checkPart = BodyPart.query.filter_by(name = part).first()
+			if checkPart is not None:
+				newBodyPartExercieJoin = BodyPartExerciseJoin(bodyPart_id = checkPart.id, exercise_id = newExercise.id)
+				db.session.add(newBodyPartExercieJoin)
+				db.session.commit()
 
-	for part in exercise["bodyPart"]:
-		checkPart = BodyPart.query.filter_by(name = part).first()
-		if checkPart is not None:
-			newBodyPartExercieJoin = BodyPartExerciseJoin(bodyPart_id = checkPart.id, exercise_id = newExercise.id)
-			db.session.add(newBodyPartExercieJoin)
-			db.session.commit()
+			else:
+				newPart = BodyPart(name = part)
+				db.session.add(newPart)
+				db.session.commit()
 
-		else:
-			newPart = BodyPart(name = part)
-			db.session.add(newPart)
-			db.session.commit()
-
-			newBodyPartExercieJoin = BodyPartExerciseJoin(bodyPart_id = newPart.id, exercise_id = newExercise.id)
-			db.session.add(newBodyPartExercieJoin)
-			db.session.commit()
+				newBodyPartExercieJoin = BodyPartExerciseJoin(bodyPart_id = newPart.id, exercise_id = newExercise.id)
+				db.session.add(newBodyPartExercieJoin)
+				db.session.commit()
 
 
 	#print(BodyPart.query.filter_by(name = "chest").first())
@@ -234,8 +235,10 @@ def newExercise(exercise):
 
 #only for weight lifting
 def enterSetWeight(exerciseSet):
-	# if not isinstance(exerciseSet, dict):
-	# 	exerciseSet = json.loads(exerciseSet)
+
+	if not isinstance(exerciseSet, dict):
+		exerciseSet = json.loads(exerciseSet)
+	# print(exerciseSet[0]["date"])
 
 	dateTime = datetime.strptime(exerciseSet[0]["date"] + " " +  exerciseSet[0]["time"], '%d-%m-%Y %I:%M%p')
 
