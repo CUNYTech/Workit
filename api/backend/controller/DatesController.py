@@ -478,11 +478,10 @@ def getExerciseByBodyPart(bodyPart):
 	exercises = []
 	for exerciseId in joinTable:
 		getExercise = Exercise.query.filter_by(id = exerciseId.exercise_id).first()
-		if getExercise is not None:
-			exercise = {
-				"name" : getExercise.name
-			}
-			exercises.append(exercise)
+		exercise = {
+			"name" : getExercise.name
+		}
+		exercises.append(exercise)
 
 	print(exercises)
 
