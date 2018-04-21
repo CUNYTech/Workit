@@ -33,4 +33,37 @@
            />
     </android.support.design.widget.TextInputLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <RadioGroup
+        android:id="@+id/CategoryRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/Cardio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cardio"
+            android:textColor="#000000"
+            />
+        <RadioButton
+            android:id="@+id/WeightLifting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weight Lifting"
+            android:textColor="#000000"/>
+        <RadioButton
+            android:id="@+id/Calisthenics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calisthenics"
+            android:textColor="#000000"
+            />
+
+    </RadioGroup>
+    </RelativeLayout>
+
 </LinearLayout>

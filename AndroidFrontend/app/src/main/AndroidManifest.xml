@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.meghnapai.workoutapp">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-<uses-permission android:name="android.permission.SET_ALARM"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,11 +27,14 @@
         <activity android:name=".ListViewActivityTriceps" />
         <activity android:name=".WeightsActivity" />
         <activity android:name=".CalendarActivity" />
-        <activity android:name=".Homepage"></activity>
-        <activity android:name=".WorkoutLog"></activity>
+        <activity android:name=".Homepage" />
+        <activity android:name=".WorkoutLog" />
+        <activity android:name=".WeightsAndRepsActivity" />
 
-        <receiver android:name="com.apicaller.schedule.ScheduleNotification"></receiver>
+        <receiver android:name=".ScheduleNotification" />
 
+        <activity android:name=".CardioReps" />
+        <activity android:name=".CalisthenicReps"></activity>
     </application>
 
 </manifest>
