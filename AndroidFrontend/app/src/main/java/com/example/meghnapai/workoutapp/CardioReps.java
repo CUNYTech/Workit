@@ -10,30 +10,30 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class WeightsAndRepsActivity extends AppCompatActivity {
+public class CardioReps extends AppCompatActivity {
 
     private ArrayList<WeightsAndRepsHandler> arrayList;// for the listview dynamic adding
     //private ArrayList<int> arrayList2;
     private ArrayAdapter<WeightsAndRepsHandler> adapter;
     // "
-    Button IncWeight, DecWeight, IncRep, DecRep, saveBtn;
-    EditText WeightsVal, RepsVal;
+    Button IncDist, DecDist, IncTime, DecTime, saveBtn;
+    EditText DistanceVal, TimeVal;
     ListView LVsets;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weights_and_reps);
+        setContentView(R.layout.activity_cardio_reps);
 
-        IncWeight = (Button) findViewById(R.id.IncWeights);
-        DecWeight = (Button) findViewById(R.id.DecWeights);
-        WeightsVal = (EditText) findViewById(R.id.ETWeights);
-        RepsVal = (EditText) findViewById(R.id.ETReps);
-        IncRep = (Button) findViewById(R.id.IncReps);
-        DecRep = (Button) findViewById(R.id.DecReps);
+        IncDist = (Button) findViewById(R.id.IncDist);
+        DecDist = (Button) findViewById(R.id.DecDist);
+        DistanceVal = (EditText) findViewById(R.id.ETDistance);
+        TimeVal = (EditText) findViewById(R.id.ETTime);
+        IncTime = (Button) findViewById(R.id.IncTime);
+        DecTime = (Button) findViewById(R.id.DecTime);
         LVsets= (ListView) findViewById(R.id.LVSets);
-        saveBtn = (Button) findViewById(R.id.SaveBtn);
+        saveBtn = (Button) findViewById(R.id.SaveButtn);
 
         arrayList=new ArrayList<WeightsAndRepsHandler>();
         adapter = new ArrayAdapter<WeightsAndRepsHandler>(this, R.layout.custom_listview_ex, R.id.textView, arrayList);
@@ -46,48 +46,48 @@ public class WeightsAndRepsActivity extends AppCompatActivity {
 
 
         //for hiding the curosr and making it visible.. not working too well right now --NEED TO FIX
-        WeightsVal.setOnClickListener(new View.OnClickListener() {
+        DistanceVal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WeightsVal.setCursorVisible(true);
+                DistanceVal.setCursorVisible(true);
             }
         });
 
 
-        RepsVal.setOnClickListener(new View.OnClickListener() {
+        TimeVal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RepsVal.setCursorVisible(true);
+                TimeVal.setCursorVisible(true);
             }
         });
 
-        IncWeight.setOnClickListener(new View.OnClickListener() {
+        IncDist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!validate()){
                     //  Toast.makeText(WeightsAndRepsActivity.this, "Please check your values", Toast.LENGTH_SHORT).show();
-                    WeightsVal.setText(Integer.toString(0));
+                    DistanceVal.setText(Integer.toString(0));
                 }
                 else {
-                    int t = Integer.parseInt(WeightsVal.getText().toString());
-                    WeightsVal.setText(String.valueOf(t + 1));
-                    WeightsVal.setCursorVisible(false);
+                    int t = Integer.parseInt(DistanceVal.getText().toString());
+                    DistanceVal.setText(String.valueOf(t + 1));
+                    DistanceVal.setCursorVisible(false);
                 }
             }
         });
 
-        DecWeight.setOnClickListener(new View.OnClickListener() {
+        DecDist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!validate()){
                     //Toast.makeText(WeightsAndRepsActivity.this, "Please check your values", Toast.LENGTH_SHORT).show();
-                    WeightsVal.setText(Integer.toString(0));
+                    DistanceVal.setText(Integer.toString(0));
                 }
                 else {
-                    int t = Integer.parseInt(WeightsVal.getText().toString());
+                    int t = Integer.parseInt(DistanceVal.getText().toString());
                     if (t > 0) {
-                        WeightsVal.setText(String.valueOf(t - 1));
-                        WeightsVal.setCursorVisible(false);
+                        DistanceVal.setText(String.valueOf(t - 1));
+                        DistanceVal.setCursorVisible(false);
                     }
                 }
             }
@@ -95,33 +95,33 @@ public class WeightsAndRepsActivity extends AppCompatActivity {
 
 
 
-        IncRep.setOnClickListener(new View.OnClickListener() {
+        IncTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!validate()){
                     // Toast.makeText(WeightsAndRepsActivity.this, "Please check your values", Toast.LENGTH_SHORT).show();
-                    RepsVal.setText(Integer.toString(0));
+                    TimeVal.setText(Integer.toString(0));
                 }
                 else {
-                    int t = Integer.parseInt(RepsVal.getText().toString());
-                    RepsVal.setText(String.valueOf(t + 1));
-                    RepsVal.setCursorVisible(false);
+                    int t = Integer.parseInt(TimeVal.getText().toString());
+                    TimeVal.setText(String.valueOf(t + 1));
+                    TimeVal.setCursorVisible(false);
                 }
             }
         });
 
-        DecRep.setOnClickListener(new View.OnClickListener() {
+        DecTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!validate()){
                     //Toast.makeText(WeightsAndRepsActivity.this, "Please check your values", Toast.LENGTH_SHORT).show();
-                    RepsVal.setText(Integer.toString(0));
+                    TimeVal.setText(Integer.toString(0));
                 }
                 else {
-                    int t = Integer.parseInt(RepsVal.getText().toString());
+                    int t = Integer.parseInt(TimeVal.getText().toString());
                     if (t > 0) {
-                        RepsVal.setText(String.valueOf(t - 1));
-                        RepsVal.setCursorVisible(false);
+                        TimeVal.setText(String.valueOf(t - 1));
+                        TimeVal.setCursorVisible(false);
                     }
                 }
             }
@@ -130,11 +130,13 @@ public class WeightsAndRepsActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String reps = RepsVal.getText().toString();
-                String weights = WeightsVal.getText().toString();
+                String reps = TimeVal.getText().toString();
+                String weights = DistanceVal.getText().toString();
 
 
-                arrayList.add(new WeightsAndRepsHandler(Integer.parseInt(weights),Integer.parseInt(reps), "Weights: ", "Reps: "));
+
+
+                arrayList.add(new WeightsAndRepsHandler(Integer.parseInt(weights),Integer.parseInt(reps), "Distance: ", "Time: "));
 
 
                 adapter.notifyDataSetChanged();
@@ -146,11 +148,11 @@ public class WeightsAndRepsActivity extends AppCompatActivity {
     public boolean validate()
     {
         boolean valid = true;
-        if (WeightsVal.getText().toString().isEmpty())
+        if (DistanceVal.getText().toString().isEmpty())
         {
             valid = false;
         }
-        if (RepsVal.getText().toString().isEmpty())
+        if (TimeVal.getText().toString().isEmpty())
         {
             valid = false;
         }
