@@ -13,7 +13,7 @@
         android:layout_width="160dp"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/buttonstyle"
         android:text="Date"
         android:layout_centerHorizontal="true"
@@ -31,7 +31,7 @@
         android:background="@drawable/buttonstyle"
         android:text="Time"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="180dp"
         android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.459"
@@ -43,8 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="190dp"
-        android:text="TextView"
+        android:layout_marginTop="130dp"
+        android:text="xx/xx/xx"
         android:textColor="#fff"
         app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -56,9 +56,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="280dp"
         android:textColor="#fff"
-        android:text="TextView"
+        android:text="xx:xx"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="151dp" />
@@ -71,10 +71,20 @@
         android:textColor="#fff"
         android:layout_below="@+id/textEditTime"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp"
+        android:layout_marginTop="90dp"
         android:text="Create Schedule"
         android:onClick="clickSchedule"
         />
 
+    <EditText
+        android:id="@+id/WorkoutName"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="320dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        />
 
 </RelativeLayout>

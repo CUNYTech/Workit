@@ -236,8 +236,8 @@ def newExercise(exercise):
 #only for weight lifting
 def enterSetWeight(exerciseSet):
 
-	if not isinstance(exerciseSet, dict):
-		exerciseSet = json.loads(exerciseSet)
+	# if not isinstance(exerciseSet, dict) and isinstance(exerciseSet, list):
+	# 	exerciseSet = json.loads(exerciseSet)
 	# print(exerciseSet[0]["date"])
 
 	dateTime = datetime.strptime(exerciseSet[0]["date"] + " " +  exerciseSet[0]["time"], '%d-%m-%Y %I:%M%p')
@@ -262,19 +262,37 @@ def enterSetWeight(exerciseSet):
 		checkSet = SetWeight.query.filter_by(setNumber = exercise["setNum"], reps = exercise["reps"], weight = exercise["weight"], weightUnit = exercise["weightUnit"]).first()
 		if checkSet is not None:
 			checkExerciseJoin = ExerciseDateJoin.query.filter_by(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id).first()
-			# print(checkExerciseJoin)
-			newSetJoin = SetExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, setWeight_id = checkSet.id)
-			db.session.add(newSetJoin)
-			db.session.commit()
+			if checkExerciseJoin is None:
+				newExerciseJoin = ExerciseDateJoin(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id)
+				db.session.add(newExerciseJoin)
+				db.session.commit()
+				
+				newSetJoin = SetExerciseDateJoin(exerciseDateJoin_id = newExerciseJoin.id, setWeight_id = checkSet.id)
+				db.session.add(newSetJoin)
+				db.session.commit()
+			else:
+				newSetJoin = SetExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, setWeight_id = checkSet.id)
+				db.session.add(newSetJoin)
+				db.session.commit()
 
 		else:
+
 			newSet = SetWeight(setNumber = exercise["setNum"], reps = exercise["reps"], weight = exercise["weight"], weightUnit = exercise["weightUnit"])
 			db.session.add(newSet)
 			db.session.commit()
 			checkExerciseJoin = ExerciseDateJoin.query.filter_by(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id).first()
-			newSetJoin = SetExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, setWeight_id = newSet.id)	
-			db.session.add(newSetJoin)
-			db.session.commit()
+			if checkExerciseJoin is None:
+				newExerciseJoin = ExerciseDateJoin(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id)
+				db.session.add(newExerciseJoin)
+				db.session.commit()
+				
+				newSetJoin = SetExerciseDateJoin(exerciseDateJoin_id = newExerciseJoin.id, setWeight_id = checkSet.id)
+				db.session.add(newSetJoin)
+				db.session.commit()
+			else:
+				newSetJoin = SetExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, setWeight_id = newSet.id)	
+				db.session.add(newSetJoin)
+				db.session.commit()
 
 	return status.HTTP_201_CREATED
 
@@ -304,10 +322,19 @@ def enterCardio(cardioExercise):
 		checkCardio = CardioSet.query.filter_by(length = exercise["length"], lengthUnit = exercise["lengthUnit"]).first()
 		if checkCardio is not None:
 			checkExerciseJoin = ExerciseDateJoin.query.filter_by(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id).first()
+			if checkExerciseJoin is None:
+				newExerciseJoin = ExerciseDateJoin(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id)
+				db.session.add(newExerciseJoin)
+				db.session.commit()
+				newSetJoin = CardioExerciseDateJoin(exerciseDateJoin_id = newExerciseJoin.id, cardio_id = checkCardio.id)
+				db.session.add(newSetJoin)
+				db.session.commit()
+
 			# print(checkExerciseJoin)
-			newSetJoin = CardioExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, cardio_id = checkCardio.id)
-			db.session.add(newSetJoin)
-			db.session.commit()
+			else:
+				newSetJoin = CardioExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, cardio_id = checkCardio.id)
+				db.session.add(newSetJoin)
+				db.session.commit()
 
 			
 		else:
@@ -315,52 +342,77 @@ def enterCardio(cardioExercise):
 			db.session.add(newSet)
 			db.session.commit()
 			checkExerciseJoin = ExerciseDateJoin.query.filter_by(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id).first()
-			newSetJoin = CardioExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, cardio_id = newSet.id)	
-			db.session.add(newSetJoin)
-			db.session.commit()
+			if checkExerciseJoin is None:
+				newExerciseJoin = ExerciseDateJoin(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id)
+				db.session.add(newExerciseJoin)
+				db.session.commit()
+				newSetJoin = CardioExerciseDateJoin(exerciseDateJoin_id = newExerciseJoin.id, cardio_id = newSet.id)
+				db.session.add(newSetJoin)
+				db.session.commit()
+
+			else:
+				newSetJoin = CardioExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, cardio_id = newSet.id)	
+				db.session.add(newSetJoin)
+				db.session.commit()
 
 	return status.HTTP_201_CREATED
 
 # for all cardio exercises
-def enterCalisthenic(CalisthenicExercise):
+def enterCalisthenic(calisthenicExercise):
 	# if not isinstance(CalisthenicExercise, dict):
 	# 	CalisthenicExercise = json.loads(CalisthenicExercise)
+	
 
-	dateTime = datetime.strptime(CalisthenicExercise[0]["date"] + " " +  CalisthenicExercise[0]["time"], '%d-%m-%Y %I:%M%p')
+	dateTime = datetime.strptime(calisthenicExercise[0]["date"] + " " +  calisthenicExercise[0]["time"], '%d-%m-%Y %I:%M%p')
 
-	user = User.query.filter_by(username = CalisthenicExercise[0]["username"]).first()
+	user = User.query.filter_by(username = calisthenicExercise[0]["username"]).first()
 	dates = Datetime.query.filter_by(datetime = dateTime).first()
-	workout = WorkoutName.query.filter_by(name = CalisthenicExercise[0]["workout"]).first()
+	workout = WorkoutName.query.filter_by(name = calisthenicExercise[0]["workout"]).first()
 	dateJoinTable = DateUserWorkoutJoin.query.filter_by(user_id = user.id, datetime_id = dates.id, workoutName_id = workout.id).first()
-	checkExercise = Exercise.query.filter_by(name = CalisthenicExercise[0]["exerciseName"]).first()
-	checkCalisthenic = CalisthenicSet.query.filter_by(setNumber = CalisthenicExercise[0]["setNum"], reps = CalisthenicExercise[0]["reps"]).first()
+	checkExercise = Exercise.query.filter_by(name = calisthenicExercise[0]["exerciseName"]).first()
+	checkCalisthenic = CalisthenicSet.query.filter_by(setNumber = calisthenicExercise[0]["setNum"], reps = calisthenicExercise[0]["reps"]).first()
 
 	if user is None:
 		return status.HTTP_428_PRECONDITION_REQUIRED
 
-	if checkExercise.tag.lower() != "calisthenic":
-		return status.HTTP_428_PRECONDITION_REQUIRED
-
+	
 	if dateJoinTable is None:
+		
 		return status.HTTP_428_PRECONDITION_REQUIRED
 
-	for exercise in CalisthenicExercise:
+	for exercise in calisthenicExercise:
 		checkCalisthenic = CalisthenicSet.query.filter_by(setNumber = exercise["setNum"], reps = exercise["reps"]).first()
 		if checkCalisthenic is not None:
 			checkExerciseJoin = ExerciseDateJoin.query.filter_by(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id).first()
-			# print(checkExerciseJoin)
-			newSetJoin = CalisthenicExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, calisthenic_id = checkCalisthenic.id)
-			db.session.add(newSetJoin)
-			db.session.commit()
+			if checkExerciseJoin is None:
+				newExerciseJoin = ExerciseDateJoin(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id)
+				db.session.add(newExerciseJoin)
+				db.session.commit()
+			
+				newSetJoin = CalisthenicExerciseDateJoin(exerciseDateJoin_id = newExerciseJoin.id, calisthenic_id = checkCalisthenic.id)
+				db.session.add(newSetJoin)
+				db.session.commit()
+			else:
+				newSetJoin = CalisthenicExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, calisthenic_id = checkCalisthenic.id)
+				db.session.add(newSetJoin)
+				db.session.commit()
 
 		else:
 			newSet = CalisthenicSet(setNumber = exercise["setNum"], reps = exercise["reps"])
 			db.session.add(newSet)
 			db.session.commit()
 			checkExerciseJoin = ExerciseDateJoin.query.filter_by(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id).first()
-			newSetJoin = CalisthenicExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, calisthenic_id = newSet.id)	
-			db.session.add(newSetJoin)
-			db.session.commit()
+			if checkExerciseJoin is None:
+				newExerciseJoin = ExerciseDateJoin(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id)
+				db.session.add(newExerciseJoin)
+				db.session.commit()
+				newSetJoin = CalisthenicExerciseDateJoin(exerciseDateJoin_id = newExerciseJoin.id, calisthenic_id = newSet.id)	
+				db.session.add(newSetJoin)
+				db.session.commit()
+			else:
+				newSetJoin = CalisthenicExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, calisthenic_id = newSet.id)	
+				db.session.add(newSetJoin)
+				db.session.commit()
 
 	return status.HTTP_201_CREATED
 
@@ -482,7 +534,9 @@ def getExerciseByBodyPart(bodyPart):
 	for exerciseId in joinTable:
 		getExercise = Exercise.query.filter_by(id = exerciseId.exercise_id).first()
 		exercise = {
-			"name" : getExercise.name
+			"name" : getExercise.name,
+			"type" : getExercise.tag
+
 		}
 		exercises.append(exercise)
 

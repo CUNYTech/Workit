@@ -1,6 +1,7 @@
 package com.APICaller.sets;
 
 import com.APICaller.exercise.Exercise;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by russ on 4/1/18.
@@ -11,20 +12,21 @@ public class WeightLiftingSet {
     private String date;
     private String time;
     private String workout;
-    private String tag;
+//    private String tag;
     private String exerciseName;
     private int setNum;
     private int weight;
     private int reps;
+    @SerializedName("weightUnit")
     private String weightUnits;
 
 
-    public WeightLiftingSet(String username, String date, String time, String workout, String tag, String exerciseName, int setNum, int weight, int reps, String weightUnits) {
+    public WeightLiftingSet(String username, String date, String time, String workout, String exerciseName, int setNum, int weight, int reps, String weightUnits) {
         this.username = username;
         this.date = date;
         this.time = time;
         this.workout = workout;
-        this.tag = tag;
+//        this.tag = tag;
         this.exerciseName = exerciseName;
         this.setNum = setNum;
         this.weight = weight;
@@ -37,7 +39,7 @@ public class WeightLiftingSet {
         this.date = exercise.getDate();
         this.time = exercise.getTime();
         this.workout = exercise.getWorkout();
-        this.tag = exercise.getTag();
+        //this.tag = exercise.getTag();
         this.exerciseName = exercise.getExerciseName();
         this.setNum = setNum;
         this.weight = weight;
@@ -61,9 +63,9 @@ public class WeightLiftingSet {
         return workout;
     }
 
-    public String getTag() {
-        return tag;
-    }
+    //public String getTag() {
+       // return tag;
+    //}
 
     public String getExerciseName() {
         return exerciseName;
@@ -83,5 +85,20 @@ public class WeightLiftingSet {
 
     public String getWeightUnits() {
         return weightUnits;
+    }
+
+    @Override
+    public String toString() {
+        return "WeightLiftingSet{" +
+                "username='" + username + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", workout='" + workout + '\'' +
+                ", exerciseName='" + exerciseName + '\'' +
+                ", setNum=" + setNum +
+                ", weight=" + weight +
+                ", reps=" + reps +
+                ", weightUnits='" + weightUnits + '\'' +
+                '}';
     }
 }
