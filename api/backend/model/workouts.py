@@ -10,6 +10,7 @@ class Datetime(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	datetime = db.Column(db.DateTime, nullable=False, unique=True)
 	dateUserWorkoutJoins = db.relationship('DateUserWorkoutJoin', backref='datetime', lazy=True)
+	userDateExerciseJoin = db.relationship('UserDateExerciseJoin', backref='datetime', lazy=True)
 	
 
 	def __repr__(self):
@@ -32,6 +33,7 @@ class Exercise(db.Model):
 	tag = db.Column(db.String(200), nullable=False)
 	exerciesSetDateJoin = db.relationship('ExerciseDateJoin', backref='exercise', lazy=True)
 	bodyPartExerciseJoin = db.relationship('BodyPartExerciseJoin', backref='exercise', lazy=True)
+	userDateExerciseJoin = db.relationship('UserDateExerciseJoin', backref='exercise', lazy=True)
 	
 
 	def __repr__(self):
@@ -128,7 +130,7 @@ class CalisthenicExerciseDateJoin(db.Model):
 	calisthenic_id =  db.Column(db.Integer, db.ForeignKey('calisthenicSets.id'))
 
 	def __repr__(self):
-		return "<calisthenicExerciseDateJoins(exerciseDateJoin_id = '%s', calisthenic_id = '%s')>" %(self.exerciseDateJoin_id, calisthenic_id)
+		return "<calisthenicExerciseDateJoins(exerciseDateJoin_id = '%s', calisthenic_id = '%s')>" %(self.exerciseDateJoin_id, self.calisthenic_id)
 
 class CardioExerciseDateJoin(db.Model):
 	__tablename__ = 'cardioExerciseDateJoins'
@@ -137,4 +139,14 @@ class CardioExerciseDateJoin(db.Model):
 	cardio_id =  db.Column(db.Integer, db.ForeignKey('cardioSets.id'))
 
 	def __repr__(self):
-		return "<cardioExerciseDateJoins(exerciseDateJoin_id = '%s', cardio_id = '%s')>" %(self.exerciseDateJoin_id, cardio_id)
+		return "<cardioExerciseDateJoins(exerciseDateJoin_id = '%s', cardio_id = '%s')>" %(self.exerciseDateJoin_id, self.cardio_id)
+
+class UserDateExerciseJoin(db.Model):
+	__tablename__ = 'userDateExerciseJoins'
+	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+	datetime_id = db.Column(db.Integer, db.ForeignKey('datetimes.id'))
+	exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'))
+
+	def __repr__(self):
+		return "<userDateExerciseJoins(user_id = '%s' , datetime_id = '%s' , exercise_id = '%s')>" %(self.user_id, self.datetime_id, self.exercise_id)

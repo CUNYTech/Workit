@@ -4,7 +4,7 @@ sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 
 from model.users import User, db
 from datetime import datetime
-from model.workouts import Datetime, WorkoutName, DateUserWorkoutJoin, Exercise, ExerciseDateJoin, SetWeight, SetExerciseDateJoin, CalisthenicSet, CardioSet,CalisthenicExerciseDateJoin, CardioExerciseDateJoin, BodyPart, BodyPartExerciseJoin
+from model.workouts import Datetime, WorkoutName, DateUserWorkoutJoin, Exercise, ExerciseDateJoin, SetWeight, SetExerciseDateJoin, CalisthenicSet, CardioSet,CalisthenicExerciseDateJoin, CardioExerciseDateJoin, BodyPart, BodyPartExerciseJoin,UserDateExerciseJoin
 from flask import jsonify
 from flask_api import status
 from sqlalchemy import desc
@@ -119,6 +119,9 @@ def enterExercise(exercise):
 
 
 	if checkExercise is not None:
+		newlistExercise = UserDateExerciseJoin(user_id = user.id, datetime_id = dates.id, exercise_id = checkExercise.id)
+		db.session.add(newlistExercise)
+		db.session.commit()
 		if 'bodyPart' in exercise:
 			for part in exercise["bodyPart"]:
 
@@ -147,8 +150,11 @@ def enterExercise(exercise):
 		return status.HTTP_201_CREATED
 
 	newExercise = Exercise(name = exercise["exerciseName"], tag = exercise["tag"])
-	db.session.add(newExercise)
-	
+	db.session.add(newExercise)	
+	db.session.commit()
+
+	newlistExercise = UserDateExerciseJoin(user_id = user.id, datetime_id = dates.id, exercise_id = newExercise.id)
+	db.session.add(newlistExercise)
 	db.session.commit()
 	if 'bodyPart' in exercise:
 		for part in exercise["bodyPart"]:
@@ -545,3 +551,94 @@ def getExerciseByBodyPart(bodyPart):
 	return exercises
 
 
+def getExerciseList(user, date, time):
+
+	dateTime = datetime.strptime(date + " " +  time, '%d-%m-%Y %I:%M%p')
+	
+	getUser = User.query.filter_by(username= user).first()
+	getDatetime = Datetime.query.filter_by(datetime = dateTime).first()
+
+	getUserDateExerciseJoin = UserDateExerciseJoin.query.filter_by(user_id = getUser.id, datetime_id = getDatetime.id).all()
+
+
+	exerciseList = []
+	for exercises in getUserDateExerciseJoin:
+		getExercise = Exercise.query.filter_by(id = exercises.exercise_id).first()
+
+		exercise = {
+			"exerciseName" : getExercise.name,
+			"tag" : getExercise.tag
+
+		}
+
+		exerciseList.append(exercise)
+
+
+	return exerciseList
+
+
+def getSets(user, date, time, exercise):
+	dateTime = datetime.strptime(date + " " +  time, '%d-%m-%Y %I:%M%p')
+	
+	getUser = User.query.filter_by(username= user).first()
+	getDatetime = Datetime.query.filter_by(datetime = dateTime).first()
+	getExercise = Exercise.query.filter_by(name= exercise).first()
+	getUserDateJoin = DateUserWorkoutJoin.query.filter_by(user_id = getUser.id, datetime_id = getDatetime.id).first()
+	getExerciseJoin = ExerciseDateJoin.query.filter_by(dateJoin_id = getUserDateJoin.id , exercise_id = getExercise.id).first()
+
+	if getExercise.tag.lower() == "weight lifting":
+		getSetJoin = SetExerciseDateJoin.query.filter_by(exerciseDateJoin_id = getExerciseJoin.id).all()
+
+		sets = []
+
+		for liftingset in  getSetJoin:
+			getSet = SetWeight.query.filter_by(id = liftingset.setWeight_id).first()
+
+			newSet = {
+				"setNumber" : getSet.setNumber,
+				"reps" : getSet.reps,
+				"weight" : getSet.weight,
+				"weightUnit" : getSet.weightUnit
+			}
+
+			sets.append(newSet)
+
+		
+
+
+	if getExercise.tag.lower() == "cardio":
+		getSetJoin = CardioExerciseDateJoin.query.filter_by(exerciseDateJoin_id = getExerciseJoin.id).all()
+
+		sets = []
+
+		for liftingset in  getSetJoin:
+			getSet = CardioSet.query.filter_by(id = liftingset.cardio_id).first()
+
+			newSet = {
+				"length" : getSet.legnth,
+				"lengthUnit" : getSet.reps
+				
+			}
+
+			sets.append(newSet)
+
+		
+
+	if getExercise.tag.lower() == "calisthenic":
+		getSetJoin = CalisthenicExerciseDateJoin.query.filter_by(exerciseDateJoin_id = getExerciseJoin.id).all()
+
+		sets = []
+
+		for liftingset in  getSetJoin:
+			getSet = CalisthenicSet.query.filter_by(id = liftingset.cardio_id).first()
+
+			newSet = {
+				"setNumber" : getSet.setNumber,
+				"reps" : getSet.reps
+				
+			}
+
+			sets.append(newSet)
+
+	
+	return sets

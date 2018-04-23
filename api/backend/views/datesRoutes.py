@@ -53,3 +53,12 @@ def getProgess(username, exercise, tag):
 		return jsonify(DatesController.getCalisthenicProgress(username, exercise))
 	else:
 		abort(404)
+
+@dates.route("/get/exercise/list/<user>/<date>/<time>")
+def getList(user,date,time):
+	return jsonify(DatesController.getExerciseList(user,date,time))
+
+
+@dates.route("/get/sets/<user>/<date>/<time>/<exercise>")
+def getList(user,date,time,exercise):
+	return jsonify(DatesController.getSets(user, date, time, exercise))

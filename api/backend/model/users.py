@@ -25,10 +25,7 @@ class User(db.Model):
 	heightUnit = db.Column(db.String(10), nullable=False)
 	dateUserWorkoutJoins = db.relationship('DateUserWorkoutJoin', backref='user', lazy=True)
 	userweightJoins = db.relationship('WeightUserJoin', backref='user', lazy=True)
-	# friends1 = db.relationship('Friend', foreign_keys='Friend.friend_id1')
-	# friends2 = db.relationship('Friend', foreign_keys='Friend.friend_id2')
-	# blocks1 = db.relationship('Block', foreign_keys='Block.block_id1')
-	# blocks2 = db.relationship('Block', foreign_keys='Block.block_id2')
+	userDateExerciseJoin = db.relationship('UserDateExerciseJoin', backref='user', lazy=True)
 
 	
 	def __repr__(self):
