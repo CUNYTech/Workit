@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.APICaller.base.WorkoutAPI;
 import com.APICaller.schedule.Schedule;
@@ -36,12 +37,15 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
     Button dateBtn, timeBtn, createSchedBtn;
     int _hour, _minute, _year, _month, _day , ampm;
     DatePickerDialog datePickerDialog;
+    EditText WorkoutName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
+         WorkoutName= (EditText) findViewById(R.id.WorkoutName);
 
         date = (TextView) findViewById(R.id.textEditDate);
         time = (TextView) findViewById(R.id.textEditTime);
@@ -121,6 +125,8 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         }
 
     }
+
+
     public void clickSchedule(View view) {
 
         // Schedule schedule = new Schedule(
@@ -130,17 +136,23 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
 
         //  );
 
+        final String WorkoutText=WorkoutName.getText().toString();
+
+        //Toast.makeText(CalendarActivity.this, WorkoutText, Toast.LENGTH_LONG).show();
+
         Calendar notification = Calendar.getInstance();
         notification.set(Calendar.DAY_OF_MONTH, _day );
         notification.set(Calendar.MONTH, _month);
         notification.set(Calendar.HOUR,_hour);
         notification.set(Calendar.MINUTE, _minute);
-        String date = String.valueOf(_day) + '-' + String.valueOf(_month) + '-' + String.valueOf(_year);
-        String _time = time.getText().toString().replace(" ","");
+        final String date = String.valueOf(_day) + '-' + String.valueOf(_month) + '-' + String.valueOf(_year);
+        final String _time = time.getText().toString().replace(" ","");
         System.out.println(_time);
-        Session session = new Session(this);
+        final Session session = new Session(this);
 
-        Schedule schedule = new Schedule(session.getUsername(), date, _time, "chest press");
+
+
+        Schedule schedule = new Schedule(session.getUsername(), date, _time, WorkoutText);
 
         OkHttpClient httpClient = new OkHttpClient();
         Retrofit.Builder builder = new Retrofit.Builder()
@@ -158,6 +170,18 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
 
                 if(response.code() == 201){
                     System.out.println("Success");
+                    Session session = new Session(CalendarActivity.this);
+                    session.setDate(date);
+                    session.setTime(_time);
+                    session.setWorkout(WorkoutText);
+                    Intent intent = new Intent(getApplicationContext(),BodyListActivity.class);
+                    startActivity(intent);
+
+//                    PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(),111,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//                    alarmManager.set(AlarmManager.RTC_WAKEUP, notification.getTimeInMillis(), alarmIntent);
+                    //include AlarmManager after Millis to set up intervals
                 }else{
                     System.out.println("Failed");
                 }
@@ -171,13 +195,10 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         });
 
 
-        Intent intent = new Intent(getApplicationContext(),ScheduleNotification.class);
 
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(),111,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, notification.getTimeInMillis(), alarmIntent);
-        //include AlarmManager after Millis to set up intervals
+
+
     }
 
 

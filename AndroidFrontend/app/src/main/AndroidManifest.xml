@@ -23,10 +23,12 @@
         <activity android:name=".BodyListActivity" />
         <activity android:name=".ListViewActivity1" />
         <activity android:name=".UserInfoActivity" />
-        <activity android:name=".ListViewActivityBiceps" />
-        <activity android:name=".ListViewActivityTriceps" />
         <activity android:name=".WeightsActivity" />
         <activity android:name=".CalendarActivity" />
+        <activity android:name=".RecyclerWorkouts" />
+
+
+
         <activity android:name=".Homepage" />
         <activity android:name=".WorkoutLog" />
         <activity android:name=".WeightsAndRepsActivity" />

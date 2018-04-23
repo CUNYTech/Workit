@@ -36,7 +36,7 @@ public interface WorkoutAPI {
     // enter exercise
     @Headers("Content-Type: application/json")
     @POST("/date/new/exercise")
-    Call<ResponseBody> newWeightLifingSetPost(@Body Exercise newExercise);
+    Call<ResponseBody> exercise(@Body Exercise newExercise);
 
     //weight lifting
     @Headers("Content-Type: application/json")

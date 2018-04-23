@@ -1,5 +1,6 @@
 package com.example.meghnapai.workoutapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -7,8 +8,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.APICaller.base.WorkoutAPI;
+import com.APICaller.sets.CardioSet;
+import com.APICaller.sets.WeightLiftingSet;
 
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CardioReps extends AppCompatActivity {
 
@@ -16,9 +30,11 @@ public class CardioReps extends AppCompatActivity {
     //private ArrayList<int> arrayList2;
     private ArrayAdapter<WeightsAndRepsHandler> adapter;
     // "
-    Button IncDist, DecDist, IncTime, DecTime, saveBtn;
+    Button IncDist, DecDist, IncTime, DecTime, saveBtn, doneBtn;
     EditText DistanceVal, TimeVal;
     ListView LVsets;
+    int counter = 1;
+    String passingExercise;
 
 
     @Override
@@ -34,6 +50,7 @@ public class CardioReps extends AppCompatActivity {
         DecTime = (Button) findViewById(R.id.DecTime);
         LVsets= (ListView) findViewById(R.id.LVSets);
         saveBtn = (Button) findViewById(R.id.SaveButtn);
+        doneBtn= (Button) findViewById(R.id.DoneButtn);
 
         arrayList=new ArrayList<WeightsAndRepsHandler>();
         adapter = new ArrayAdapter<WeightsAndRepsHandler>(this, R.layout.custom_listview_ex, R.id.textView, arrayList);
@@ -136,10 +153,63 @@ public class CardioReps extends AppCompatActivity {
 
 
 
-                arrayList.add(new WeightsAndRepsHandler(Integer.parseInt(weights),Integer.parseInt(reps), "Distance: ", "Time: "));
+                arrayList.add(new WeightsAndRepsHandler(Integer.parseInt(weights),Integer.parseInt(reps), "Distance: ", "Time: ",counter));
+                counter++;
 
 
                 adapter.notifyDataSetChanged();
+            }
+        });
+
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle extras = getIntent().getExtras();
+                Session session = new Session(CardioReps.this);
+                Toast.makeText(CardioReps.this, "Done", Toast.LENGTH_LONG).show();
+                ArrayList<CardioSet> exercises = new ArrayList<>();
+
+                passingExercise= extras.getString("Category");
+                for(WeightsAndRepsHandler handler : arrayList){
+
+                    CardioSet exercise = new CardioSet(session.getUsername(),session.getDate(),session.getTime(),
+                            session.getWorkout(),passingExercise,handler.getWeights(),"miles" );
+                    System.out.println(exercise + "\n");
+
+
+
+                    exercises.add(exercise);
+                }
+
+                OkHttpClient httpClient = new OkHttpClient();
+                Retrofit.Builder builder = new Retrofit.Builder()
+                        .baseUrl(WorkoutAPI.BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(httpClient);
+
+                Retrofit retrofit = builder.build();
+                WorkoutAPI requests = retrofit.create(WorkoutAPI.class);
+
+                Call<ResponseBody> call = requests.newCardioSetPost(exercises);
+
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.code() == 201){
+                            Intent done= new Intent(CardioReps.this, RecyclerWorkouts.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("PassedEx", passingExercise);
+                            done.putExtras(bundle);
+                            startActivity(done);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        System.out.println("Throws: " + t);
+                    }
+                });
+
             }
         });
 

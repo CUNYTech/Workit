@@ -49,6 +49,15 @@ public class Exercise {
 
     }
 
+    public Exercise(String username, String date, String time, String workout, String exerciseName, String tag) {
+        this.username = username;
+        this.date = date;
+        this.time = time;
+        this.workout = workout;
+        this.exerciseName = exerciseName;
+        this.tag = tag;
+    }
+
     public String getUsername() {
         return username;
     }

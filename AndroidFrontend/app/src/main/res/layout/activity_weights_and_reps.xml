@@ -120,14 +120,30 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <Button
             android:id="@+id/SaveBtn"
-            android:layout_width="fill_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:background="@drawable/buttonstyle"
             android:text="SAVE"
             android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/DoneBtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@+id/SaveBtn"
+            android:background="@drawable/buttonstyle"
+            android:text="DONE"
+            android:textColor="#fff" />
+
+        </RelativeLayout>
 
         <ListView
             android:id="@+id/LVSets"

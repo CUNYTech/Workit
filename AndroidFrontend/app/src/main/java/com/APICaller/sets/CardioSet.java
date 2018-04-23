@@ -18,19 +18,16 @@ public class CardioSet {
     private String workout;
     @SerializedName("exerciseName")
     private String exerciseName;
-    @SerializedName("tag")
-    private String tag;
     @SerializedName("length")
     private int length;
     @SerializedName("lengthUnit")
     private String lengthUnit;
 
-    public CardioSet(String username, String date, String time, String workout, String tag, String exerciseName, int length, String lengthUnit) {
+    public CardioSet(String username, String date, String time, String workout, String exerciseName, int length, String lengthUnit) {
         this.username = username;
         this.date = date;
         this.time = time;
         this.workout = workout;
-        this.tag = tag;
         this.exerciseName = exerciseName;
         this.length = length;
         this.lengthUnit = lengthUnit;
@@ -41,7 +38,7 @@ public class CardioSet {
         this.date = exercise.getDate();
         this.time = exercise.getTime();
         this.workout = exercise.getWorkout();
-        this.tag = exercise.getTag();
+
         this.exerciseName = exercise.getExerciseName();
         this.length = length;
         this.lengthUnit = lengthUnit;
@@ -65,10 +62,6 @@ public class CardioSet {
 
     public String getExerciseName() {
         return exerciseName;
-    }
-
-    public String getTag() {
-        return tag;
     }
 
     public int getLength() {
