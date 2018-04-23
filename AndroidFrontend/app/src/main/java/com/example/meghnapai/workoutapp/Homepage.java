@@ -1,5 +1,7 @@
 package com.example.meghnapai.workoutapp;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +31,10 @@ public class Homepage extends AppCompatActivity {
 
 
         mMainFrame = (FrameLayout) findViewById(R.id.main_Frame);
+
         mMainNav = (BottomNavigationView) findViewById(R.id.bottomNav);
+
+
 
 
 
@@ -59,9 +64,14 @@ public class Homepage extends AppCompatActivity {
 
                         return true;
 
+
                     default:
-                        return false;
+                        HomeFragment homeFragment1 = new HomeFragment();
+                        setFragment(homeFragment1);
+                        return true;
+
                 }
+
             }
         });
 

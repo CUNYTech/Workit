@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"  tools:context=".HomeFragment"
+    >
+
+    <item
+        android:id="@+id/add_friend"
+        android:icon="@drawable/ic_add_black_24dp"
+        android:title="Add"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/msg_chat"
+        android:icon="@drawable/ic_message_black_24dp"
+        android:title="Message"
+        app:showAsAction="always"
+
+        />
+</menu>

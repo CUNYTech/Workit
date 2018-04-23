@@ -34,7 +34,8 @@
         <receiver android:name=".ScheduleNotification" />
 
         <activity android:name=".CardioReps" />
-        <activity android:name=".CalisthenicReps"></activity>
+        <activity android:name=".CalisthenicReps" />
+        <activity android:name=".RecyclerWorkouts"></activity>
     </application>
 
 </manifest>
