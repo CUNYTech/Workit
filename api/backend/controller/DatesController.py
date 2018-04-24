@@ -264,6 +264,10 @@ def enterSetWeight(exerciseSet):
 	if dateJoinTable is None:
 		return status.HTTP_428_PRECONDITION_REQUIRED
 
+	newlistExercise = UserDateExerciseJoin(user_id = user.id, datetime_id = dates.id, exercise_id = checkExercise.id)
+	db.session.add(newlistExercise)
+	db.session.commit()
+
 	for exercise in exerciseSet:
 		checkSet = SetWeight.query.filter_by(setNumber = exercise["setNum"], reps = exercise["reps"], weight = exercise["weight"], weightUnit = exercise["weightUnit"]).first()
 		if checkSet is not None:
@@ -324,6 +328,11 @@ def enterCardio(cardioExercise):
 
 	if dateJoinTable is None:
 		return status.HTTP_428_PRECONDITION_REQUIRED
+
+	newlistExercise = UserDateExerciseJoin(user_id = user.id, datetime_id = dates.id, exercise_id = checkExercise.id)
+	db.session.add(newlistExercise)
+	db.session.commit()
+
 	for exercise in cardioExercise:
 		checkCardio = CardioSet.query.filter_by(length = exercise["length"], lengthUnit = exercise["lengthUnit"]).first()
 		if checkCardio is not None:
@@ -385,6 +394,10 @@ def enterCalisthenic(calisthenicExercise):
 	if dateJoinTable is None:
 		
 		return status.HTTP_428_PRECONDITION_REQUIRED
+
+	newlistExercise = UserDateExerciseJoin(user_id = user.id, datetime_id = dates.id, exercise_id = checkExercise.id)
+	db.session.add(newlistExercise)
+	db.session.commit()
 
 	for exercise in calisthenicExercise:
 		checkCalisthenic = CalisthenicSet.query.filter_by(setNumber = exercise["setNum"], reps = exercise["reps"]).first()
@@ -559,20 +572,19 @@ def getExerciseList(user, date, time):
 	getDatetime = Datetime.query.filter_by(datetime = dateTime).first()
 
 	getUserDateExerciseJoin = UserDateExerciseJoin.query.filter_by(user_id = getUser.id, datetime_id = getDatetime.id).all()
-
+	
 
 	exerciseList = []
 	for exercises in getUserDateExerciseJoin:
 		getExercise = Exercise.query.filter_by(id = exercises.exercise_id).first()
 
 		exercise = {
-			"exerciseName" : getExercise.name,
+			"name" : getExercise.name,
 			"tag" : getExercise.tag
 
 		}
 
 		exerciseList.append(exercise)
-
 
 	return exerciseList
 

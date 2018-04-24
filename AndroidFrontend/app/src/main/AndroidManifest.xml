@@ -26,9 +26,6 @@
         <activity android:name=".WeightsActivity" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".RecyclerWorkouts" />
-
-
-
         <activity android:name=".Homepage" />
         <activity android:name=".WorkoutLog" />
         <activity android:name=".WeightsAndRepsActivity" />
@@ -36,7 +33,8 @@
         <receiver android:name=".ScheduleNotification" />
 
         <activity android:name=".CardioReps" />
-        <activity android:name=".CalisthenicReps"></activity>
+        <activity android:name=".CalisthenicReps" />
+        <activity android:name=".Listview_reps"></activity>
     </application>
 
 </manifest>
