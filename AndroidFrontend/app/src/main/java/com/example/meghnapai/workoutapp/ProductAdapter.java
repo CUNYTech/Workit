@@ -74,7 +74,7 @@ import java.util.List;
                         Intent SignInIntent = new Intent(mCtx, Listview_reps.class);
                         Bundle extras = new Bundle();
                         extras.putString("ExerciseName", ExerciseTitle.getText().toString());
-                        System.out.println(ExerciseTitle.getText().toString());
+                        SignInIntent.putExtras(extras);
                         mCtx.startActivity(SignInIntent);
 
                     }

@@ -28,7 +28,7 @@ public class Listview_reps extends AppCompatActivity {
     ListView LVreps;
     TextView ExerciseName;
     String nameEx;
-    int counter = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +41,12 @@ public class Listview_reps extends AppCompatActivity {
         LVreps.setAdapter(adapter);
 
         Bundle extras = getIntent().getExtras();
+
         nameEx = extras.getString("ExerciseName");
 //        String reps = RepsVal.getText().toString();
 //        String weights = WeightsVal.getText().toString();
 
-        ExerciseName.setText("Blah");//to set the name of exercie
+       ExerciseName.setText(nameEx);//to set the name of exercie
 
         Session session = new Session(Listview_reps.this);
         OkHttpClient httpClient = new OkHttpClient();
@@ -62,9 +63,12 @@ public class Listview_reps extends AppCompatActivity {
         call.enqueue(new Callback<List<GetSet>>() {
             @Override
             public void onResponse(Call<List<GetSet>> call, Response<List<GetSet>> response) {
-                ArrayList<GetSet> sets = new ArrayList<>(response.body());
-                for(GetSet set: sets){
-                    arrayList.add(set);
+                if(response.body() != null) {
+                    ArrayList<GetSet> sets = new ArrayList<>(response.body());
+                    for (GetSet set : sets) {
+                        arrayList.add(set);
+                    }
+                    adapter.notifyDataSetChanged();
                 }
 
             }
@@ -79,6 +83,6 @@ public class Listview_reps extends AppCompatActivity {
 
 
 
-        adapter.notifyDataSetChanged();
+
     }
 }

@@ -598,10 +598,11 @@ def getSets(user, date, time, exercise):
 	getUserDateJoin = DateUserWorkoutJoin.query.filter_by(user_id = getUser.id, datetime_id = getDatetime.id).first()
 	getExerciseJoin = ExerciseDateJoin.query.filter_by(dateJoin_id = getUserDateJoin.id , exercise_id = getExercise.id).first()
 
+	sets = []
+
 	if getExercise.tag.lower() == "weight lifting":
 		getSetJoin = SetExerciseDateJoin.query.filter_by(exerciseDateJoin_id = getExerciseJoin.id).all()
 
-		sets = []
 
 		for liftingset in  getSetJoin:
 			getSet = SetWeight.query.filter_by(id = liftingset.setWeight_id).first()
@@ -621,14 +622,13 @@ def getSets(user, date, time, exercise):
 	if getExercise.tag.lower() == "cardio":
 		getSetJoin = CardioExerciseDateJoin.query.filter_by(exerciseDateJoin_id = getExerciseJoin.id).all()
 
-		sets = []
 
 		for liftingset in  getSetJoin:
 			getSet = CardioSet.query.filter_by(id = liftingset.cardio_id).first()
 
 			newSet = {
-				"length" : getSet.legnth,
-				"lengthUnit" : getSet.reps
+				"length" : getSet.length,
+				"lengthUnit" : getSet.lengthUnit
 				
 			}
 
@@ -636,13 +636,13 @@ def getSets(user, date, time, exercise):
 
 		
 
-	if getExercise.tag.lower() == "calisthenic":
+	if getExercise.tag.lower() == "calisthenics":
 		getSetJoin = CalisthenicExerciseDateJoin.query.filter_by(exerciseDateJoin_id = getExerciseJoin.id).all()
 
-		sets = []
+		
 
 		for liftingset in  getSetJoin:
-			getSet = CalisthenicSet.query.filter_by(id = liftingset.cardio_id).first()
+			getSet = CalisthenicSet.query.filter_by(id = liftingset.calisthenic_id).first()
 
 			newSet = {
 				"setNumber" : getSet.setNumber,

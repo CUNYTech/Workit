@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.APICaller.base.WorkoutAPI;
@@ -44,7 +45,6 @@ public class RecyclerWorkouts extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_workouts);
-        Bundle extras = getIntent().getExtras();
 
 
 
@@ -79,11 +79,9 @@ public class RecyclerWorkouts extends AppCompatActivity {
         call.enqueue(new Callback<List<GetExercise>>() {
             @Override
             public void onResponse(Call<List<GetExercise>> call, Response<List<GetExercise>> response) {
-                System.out.println("Response: " + response.body());
                 exercises = new ArrayList<>(response.body());
                 productList = new ArrayList<>();
                 for(GetExercise exercise: exercises){
-                    System.out.println("exercise: " + exercise.getName());
                     productList.add(new Product(exercise.getName()));
 
                 }
@@ -111,7 +109,14 @@ public class RecyclerWorkouts extends AppCompatActivity {
 //        recyclerView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//              //  Toast.makeText(itemView.getContext(), "Position:" + Integer.toString(getPosition()), Toast.LENGTH_SHORT).show();
+//                System.out.println("dfsdafsadfsdafasfsdf");
+//                TextView textView = (TextView) recyclerView.findViewById(R.id.RecyclerView) ;
+//                Bundle bundle = new Bundle();
+//                System.out.println("what is this: " + textView.getText().toString());
+//                //bundle.putString("ExerciseName", textView.getText().toString());
+//               // Intent showReps = new Intent(RecyclerWorkouts.this, Listview_reps.class);
+//                //showReps.putExtras(bundle);
+//                //RecyclerWorkouts.this.startActivity(showReps );
 //            }
 //        });
     }
