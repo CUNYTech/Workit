@@ -9,18 +9,31 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.APICaller.base.WorkoutAPI;
+import com.APICaller.exercise.GetExercise;
+import com.APICaller.sets.GetSet;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RecyclerWorkouts extends AppCompatActivity {
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
-    String passingExercise;
 
+    ArrayList<GetExercise> exercises;
 //
     List<Product> productList;
 //
@@ -32,37 +45,80 @@ public class RecyclerWorkouts extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_workouts);
-        Bundle extras = getIntent().getExtras();
-        passingExercise= extras.getString("PassedEx");
 
-        System.out.println(passingExercise);
+
+
         //getting the recyclerview from xml
         recyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //initializing the productlist
-        productList = new ArrayList<>();
+
 
 
         //adding some items to our list
-        productList.add(
-                new Product(passingExercise
-                ));
+
         //adapter.notifyDataSetChanged();
 
         //creating recyclerview adapter
-        ProductAdapter adapter = new ProductAdapter(this, productList);
 
-        //setting adapter to recyclerview
-        recyclerView.setAdapter(adapter);
 
-        recyclerView.setOnClickListener(new View.OnClickListener() {
+        Session session = new Session(RecyclerWorkouts.this);
+        OkHttpClient httpClient = new OkHttpClient();
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(WorkoutAPI.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient);
+
+        Retrofit retrofit = builder.build();
+        final WorkoutAPI requests = retrofit.create(WorkoutAPI.class);
+
+        Call<List<GetExercise>> call = requests.getExerciseList(session.getUsername(),session.getDate(),session.getTime());
+
+        call.enqueue(new Callback<List<GetExercise>>() {
             @Override
-            public void onClick(View view) {
-               // Toast.makeText(itemView.getContext(), "Position:" + Integer.toString(getPosition()), Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<List<GetExercise>> call, Response<List<GetExercise>> response) {
+                exercises = new ArrayList<>(response.body());
+                productList = new ArrayList<>();
+                for(GetExercise exercise: exercises){
+                    productList.add(new Product(exercise.getName()));
+
+                }
+
+                final ProductAdapter adapter = new ProductAdapter(RecyclerWorkouts.this, productList);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<GetExercise>> call, Throwable t) {
+                System.out.println("Throws: " + t);
             }
         });
+
+        //setting adapter to recyclerview
+//recyclerView.setOnClickListener(new View.OnClickListener() {
+//    @Override
+//    public void onClick(View v)
+//
+//
+//    }
+//});
+
+
+//        recyclerView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                System.out.println("dfsdafsadfsdafasfsdf");
+//                TextView textView = (TextView) recyclerView.findViewById(R.id.RecyclerView) ;
+//                Bundle bundle = new Bundle();
+//                System.out.println("what is this: " + textView.getText().toString());
+//                //bundle.putString("ExerciseName", textView.getText().toString());
+//               // Intent showReps = new Intent(RecyclerWorkouts.this, Listview_reps.class);
+//                //showReps.putExtras(bundle);
+//                //RecyclerWorkouts.this.startActivity(showReps );
+//            }
+//        });
     }
 
 

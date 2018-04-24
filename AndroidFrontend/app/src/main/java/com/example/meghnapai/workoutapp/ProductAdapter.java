@@ -1,6 +1,8 @@
 package com.example.meghnapai.workoutapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.APICaller.exercise.Exercise;
 
 import java.util.List;
 
@@ -67,7 +71,12 @@ import java.util.List;
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(mCtx, ExerciseTitle.getText().toString(), Toast.LENGTH_LONG).show();
+                        Intent SignInIntent = new Intent(mCtx, Listview_reps.class);
+                        Bundle extras = new Bundle();
+                        extras.putString("ExerciseName", ExerciseTitle.getText().toString());
+                        SignInIntent.putExtras(extras);
+                        mCtx.startActivity(SignInIntent);
+
                     }
                 });
             }

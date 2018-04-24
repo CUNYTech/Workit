@@ -198,9 +198,6 @@ public class WeightsAndRepsActivity extends AppCompatActivity {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if(response.code() == 201){
                             Intent done= new Intent(WeightsAndRepsActivity.this, RecyclerWorkouts.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("PassedEx", passingExercise);
-                            done.putExtras(bundle);
                             startActivity(done);
                         }
                     }

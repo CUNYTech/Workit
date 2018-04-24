@@ -60,5 +60,5 @@ def getList(user,date,time):
 
 
 @dates.route("/get/sets/<user>/<date>/<time>/<exercise>")
-def getList(user,date,time,exercise):
+def getSet(user,date,time,exercise):
 	return jsonify(DatesController.getSets(user, date, time, exercise))

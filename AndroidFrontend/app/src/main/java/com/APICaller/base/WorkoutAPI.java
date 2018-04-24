@@ -7,6 +7,7 @@ import com.APICaller.exercise.PostExercise;
 import com.APICaller.schedule.Schedule;
 import com.APICaller.sets.CalisthenicSet;
 import com.APICaller.sets.CardioSet;
+import com.APICaller.sets.GetSet;
 import com.APICaller.sets.WeightLiftingSet;
 
 import okhttp3.ResponseBody;
@@ -67,6 +68,12 @@ public interface WorkoutAPI {
 
     @POST("/date/new/exercise")
     Call<ResponseBody> newExercise(@Body PostExercise exercise);
+
+    @GET("/date/get/exercise/list/{user}/{date}/{time}")
+    Call<List<GetExercise>> getExerciseList(@Path(value = "user", encoded = true) String user ,@Path(value = "date", encoded = true) String date, @Path(value = "time", encoded = true) String time);
+
+    @GET("/date/get/sets/{user}/{date}/{time}/{exercise}")
+    Call<List<GetSet>> getSetList(@Path(value = "user", encoded = true) String user, @Path(value = "date", encoded = true) String date, @Path(value = "time", encoded = true) String time, @Path(value = "exercise", encoded = true) String exercise);
 
 
 }
