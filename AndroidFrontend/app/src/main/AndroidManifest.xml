@@ -29,9 +29,7 @@
         <activity android:name=".Homepage" />
         <activity android:name=".WorkoutLog" />
         <activity android:name=".WeightsAndRepsActivity" />
-
         <receiver android:name=".ScheduleNotification" />
-
         <activity android:name=".CardioReps" />
         <activity android:name=".CalisthenicReps" />
         <activity android:name=".Listview_reps"></activity>

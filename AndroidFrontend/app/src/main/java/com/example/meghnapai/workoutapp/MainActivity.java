@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Session session = new Session(this);
 
         final TextView WelcomTextView= (TextView) findViewById(R.id.WelcomeTextView);
         final TextView IntroductionTextView= (TextView) findViewById(R.id.IntroductionTextView);
@@ -48,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
         final Button SignUpBtn = (Button) findViewById(R.id.SignUpBtn);
         final Button LogInBtn = (Button) findViewById(R.id.LogInBtn);
 
-
+        if(session.getUsername() != null){
+            Intent homePage = new Intent(MainActivity.this, Homepage.class);
+            MainActivity.this.startActivity(homePage);
+        }
 
 
         SignUpBtn.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
               //  Intent SignInIntent = new Intent(MainActivity.this, ListViewActivity1.class);
-                Intent SignInIntent = new Intent(MainActivity.this, BodyListActivity.class);
+                Intent SignInIntent = new Intent(MainActivity.this, Homepage.class);
                 MainActivity.this.startActivity(SignInIntent);
             }}
         );

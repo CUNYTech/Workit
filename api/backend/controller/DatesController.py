@@ -242,9 +242,9 @@ def newExercise(exercise):
 #only for weight lifting
 def enterSetWeight(exerciseSet):
 
-	# if not isinstance(exerciseSet, dict) and isinstance(exerciseSet, list):
+	# if not isinstance(exerciseSet, dict) or isinstance(exerciseSet, list):
 	# 	exerciseSet = json.loads(exerciseSet)
-	# print(exerciseSet[0]["date"])
+	#print(exerciseSet)
 
 	dateTime = datetime.strptime(exerciseSet[0]["date"] + " " +  exerciseSet[0]["time"], '%d-%m-%Y %I:%M%p')
 
@@ -308,8 +308,8 @@ def enterSetWeight(exerciseSet):
 
 # for all cardio exercises
 def enterCardio(cardioExercise):
-	# if not isinstance(cardioExercise, dict):
-	# 	cardioExercise = json.loads(cardioExercise)
+	if not isinstance(cardioExercise, dict):
+		cardioExercise = json.loads(cardioExercise)
 
 	dateTime = datetime.strptime(cardioExercise[0]["date"] + " " +  cardioExercise[0]["time"], '%d-%m-%Y %I:%M%p')
 
@@ -374,8 +374,8 @@ def enterCardio(cardioExercise):
 
 # for all cardio exercises
 def enterCalisthenic(calisthenicExercise):
-	# if not isinstance(CalisthenicExercise, dict):
-	# 	CalisthenicExercise = json.loads(CalisthenicExercise)
+	if not isinstance(CalisthenicExercise, dict):
+		CalisthenicExercise = json.loads(CalisthenicExercise)
 	
 
 	dateTime = datetime.strptime(calisthenicExercise[0]["date"] + " " +  calisthenicExercise[0]["time"], '%d-%m-%Y %I:%M%p')
@@ -587,6 +587,56 @@ def getExerciseList(user, date, time):
 		exerciseList.append(exercise)
 
 	return exerciseList
+
+
+def getSetExercises(user):
+	class ExerciseHolder():
+		def __init__(self, name, tag):
+			self.name = name
+			self.tag = tag
+
+		def __repr__(self):
+			return "Item(%s, %s)" % (self.name, self.tag)
+
+		def __eq__(self, other):
+			if isinstance(other, ExerciseHolder):
+				return ((self.name == other.name) and (self.tag == other.tag))
+			else:
+				return False
+
+		def __ne__(self, other):
+			return (not self.__eq__(other))
+
+		def __hash__(self):
+			return hash(self.__repr__())
+
+
+	getUser = User.query.filter_by(username= user).first()
+	getUserDateExerciseJoin = UserDateExerciseJoin.query.filter_by(user_id = getUser.id).all()
+
+	exerciseSet = set()
+
+	for exerciseid in getUserDateExerciseJoin:
+		getExercise = Exercise.query.filter_by(id = exerciseid.exercise_id).first()
+
+		exerciseSet.add(ExerciseHolder(getExercise.name,getExercise.tag))
+		
+
+	exerciseList = []
+
+	for holder in exerciseSet:
+
+		exercise = {
+			"name" : holder.name,
+			"tag" : holder.tag
+
+		}
+
+		exerciseList.append(exercise)
+
+	
+	return exerciseList 
+
 
 
 def getSets(user, date, time, exercise):
