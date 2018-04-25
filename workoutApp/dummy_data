@@ -1,0 +1,86 @@
+INSERT INTO exercises(name,tag)
+	VALUES("curls", "weight lifting");
+
+INSERT INTO bodyParts(name)
+	VALUES("biceps");
+
+INSERT INTO bodyPartExerciseJoins(exercise_id, bodyPart_id)
+	VALUES((SELECT id FROM exercises where name = "curls"), (SELECT id FROM bodyParts where name = "biceps"));
+
+INSERT INTO exercises(name,tag)
+	VALUES("shoulder press", "weight lifting");
+
+INSERT INTO bodyParts(name)
+	VALUES("shoulders");
+
+INSERT INTO bodyPartExerciseJoins(exercise_id, bodyPart_id)
+	VALUES((SELECT id FROM exercises where name = "shoulder press"), (SELECT id FROM bodyParts where name = "shoulders"));
+
+INSERT INTO exercises(name,tag)
+	VALUES("tricep extensions", "weight lifting");
+
+INSERT INTO bodyParts(name)
+	VALUES("triceps");
+
+INSERT INTO bodyPartExerciseJoins(exercise_id, bodyPart_id)
+	VALUES((SELECT id FROM exercises where name = "tricep extensions"), (SELECT id FROM bodyParts where name = "triceps"));
+
+INSERT INTO exercises(name,tag)
+	VALUES("chest press", "weight lifting");
+
+INSERT INTO bodyParts(name)
+	VALUES("chest");
+
+INSERT INTO bodyPartExerciseJoins(exercise_id, bodyPart_id)
+	VALUES((SELECT id FROM exercises where name = "chest press"), (SELECT id FROM bodyParts where name = "chest"));
+
+INSERT INTO exercises(name,tag)
+	VALUES("rows", "weight lifting");
+
+INSERT INTO bodyParts(name)
+	VALUES("back");
+
+INSERT INTO bodyPartExerciseJoins(exercise_id, bodyPart_id)
+	VALUES((SELECT id FROM exercises where name = "row"), (SELECT id FROM bodyParts where name = "back"));
+
+INSERT INTO exercises(name,tag)
+	VALUES("squats", "weight lifting");
+
+INSERT INTO bodyParts(name)
+	VALUES("legs");
+
+INSERT INTO bodyPartExerciseJoins(exercise_id, bodyPart_id)
+	VALUES((SELECT id FROM exercises where name = "squats"), (SELECT id FROM bodyParts where name = "legs"));
+
+INSERT INTO exercises(name,tag)
+	VALUES("crunches", "weight lifting");
+
+INSERT INTO bodyParts(name)
+	VALUES("abs");
+
+INSERT INTO bodyPartExerciseJoins(exercise_id, bodyPart_id)
+	VALUES((SELECT id FROM exercises where name = "crunches"), (SELECT id FROM bodyParts where name = "abs"));
+
+INSERT INTO exercises(name,tag)
+	VALUES("twerk", "weight lifting");
+
+INSERT INTO bodyParts(name)
+	VALUES("glutes");
+
+INSERT INTO bodyPartExerciseJoins(exercise_id, bodyPart_id)
+	VALUES((SELECT id FROM exercises where name = "twerk"), (SELECT id FROM bodyParts where name = "glutes"));
+
+INSERT INTO exercises(name,tag)
+	VALUES("jogging", "cardio");
+
+INSERT INTO bodyParts(name)
+	VALUES("cardio");
+
+INSERT INTO bodyPartExerciseJoins(exercise_id, bodyPart_id)
+	VALUES((SELECT id FROM exercises where name = "jogging"), (SELECT id FROM bodyParts where name = "cardio"));
+
+
+
+
+
+

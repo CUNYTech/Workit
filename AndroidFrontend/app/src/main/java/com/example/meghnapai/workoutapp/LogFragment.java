@@ -1,6 +1,7 @@
 package com.example.meghnapai.workoutapp;
 
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,42 +10,94 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.APICaller.base.WorkoutAPI;
+import com.APICaller.sets.GetSet;
+import com.APICaller.sets.WeightLiftingSet;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
+
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
+@SuppressLint("ValidFragment")
 public class LogFragment extends Fragment {
+    private Session session;
+    private ArrayList<WeightLiftingSet> sets;
+    private  DataPoint [] data;
 
 
-    public LogFragment() {
-
+    @SuppressLint("ValidFragment")
+    public LogFragment(Session session) {
+        this.session = session;
     }
 
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
 
+        Thread  thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    callGetRequest();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        thread.start();
+
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        return createGraph(inflater,container,savedInstanceState);
+   }
+
+    @SuppressLint("SimpleDateFormat")
+    private View createGraph(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState){
+
+        data = getDataPoints(sets);
         View v = inflater.inflate(R.layout.fragment_log2, container, false);
-
         GraphView myGraph = (GraphView) v.findViewById(R.id.graphView);
+        System.out.println(data[0].getX());
 
         myGraph.setTitle("Workout Progress");
         myGraph.setTitleTextSize(100);
         myGraph.setTitleColor(Color.WHITE);
 
-        myGraph.getViewport().setXAxisBoundsManual(true);
-        myGraph.getViewport().setMinX(0);
-        myGraph.getViewport().setMaxX(5);
+        myGraph.getViewport().setXAxisBoundsManual(false);
 
-        myGraph.getViewport().setYAxisBoundsManual(true);
-        myGraph.getViewport().setMinY(0);
-        myGraph.getViewport().setMaxY(1000);
+
+        myGraph.getViewport().setYAxisBoundsManual(false);
+
 
         myGraph.getViewport().setScrollable(true);
 
@@ -52,17 +105,18 @@ public class LogFragment extends Fragment {
 
         GridLabelRenderer gridLabelRenderer =  myGraph.getGridLabelRenderer();
 
+        gridLabelRenderer.setLabelFormatter(new DateAsXAxisLabelFormatter(getContext(),new SimpleDateFormat("Y-M-d")));
         gridLabelRenderer.setGridColor(Color.WHITE);
         gridLabelRenderer.setVerticalLabelsColor(Color.WHITE);
         gridLabelRenderer.setHorizontalLabelsColor(Color.WHITE);
         gridLabelRenderer.setHorizontalAxisTitle("Date");
         gridLabelRenderer.setHorizontalAxisTitleColor(Color.WHITE);
-        gridLabelRenderer.setVerticalAxisTitle("Workout Volume");
+        gridLabelRenderer.setVerticalAxisTitle("Weight");
         gridLabelRenderer.setVerticalAxisTitleColor(Color.WHITE);
 
 
 
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(getDataPoints());
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
         myGraph.addSeries(series);
 
         series.setColor(Color.BLACK);
@@ -72,26 +126,38 @@ public class LogFragment extends Fragment {
 
 
         return v;
+    }
 
+    private void callGetRequest() throws IOException {
+        OkHttpClient httpClient = new OkHttpClient();
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(WorkoutAPI.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient);
+
+        Retrofit retrofit = builder.build();
+        final WorkoutAPI requests = retrofit.create(WorkoutAPI.class);
+
+        Call<List<WeightLiftingSet>> call = requests.getWeightLiftingProgress(session.getUsername(),"barbell chest press");
+        sets = new ArrayList<>(call.execute().body());
     }
 
 
 
-    private DataPoint[] getDataPoints() {
+    private DataPoint[] getDataPoints(ArrayList<WeightLiftingSet> sets) {
+        DataPoint[] dp = new DataPoint[sets.size()];
 
-        DataPoint[] dp = new DataPoint[]{
-                new DataPoint(0,0),
-                new DataPoint(2,400),
-                new DataPoint(5,500),
-                new DataPoint(6,550),
-                new DataPoint(7,595),
-                new DataPoint(9,320),
-                new DataPoint(11, 550)
+        for(int i = 0; i < sets.size(); i++){
+            Date date = new Date(sets.get(i).getDate());
+            dp[i] = new DataPoint(date,sets.get(i).getWeight());
+        }
 
-        };
 
         return (dp);
     }
+
+
+
     //Read data from database
     // String[] columns = {"Dates", "workoutVolume"};  // Dates as X-Value and workoutVolume as Y-Value
 
