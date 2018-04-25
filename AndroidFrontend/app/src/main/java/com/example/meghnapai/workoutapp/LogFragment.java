@@ -87,25 +87,18 @@ public class LogFragment extends Fragment {
         data = getDataPoints(sets);
         View v = inflater.inflate(R.layout.fragment_log2, container, false);
         GraphView myGraph = (GraphView) v.findViewById(R.id.graphView);
-        System.out.println(data[0].getX());
 
         myGraph.setTitle("Workout Progress");
         myGraph.setTitleTextSize(100);
         myGraph.setTitleColor(Color.WHITE);
 
         myGraph.getViewport().setXAxisBoundsManual(false);
-
-
         myGraph.getViewport().setYAxisBoundsManual(false);
-
-
         myGraph.getViewport().setScrollable(true);
-
-
 
         GridLabelRenderer gridLabelRenderer =  myGraph.getGridLabelRenderer();
 
-        gridLabelRenderer.setLabelFormatter(new DateAsXAxisLabelFormatter(getContext(),new SimpleDateFormat("Y-M-d")));
+        gridLabelRenderer.setLabelFormatter(new DateAsXAxisLabelFormatter(getContext(),new SimpleDateFormat("Y-M-dd")));
         gridLabelRenderer.setGridColor(Color.WHITE);
         gridLabelRenderer.setVerticalLabelsColor(Color.WHITE);
         gridLabelRenderer.setHorizontalLabelsColor(Color.WHITE);
@@ -114,8 +107,6 @@ public class LogFragment extends Fragment {
         gridLabelRenderer.setVerticalAxisTitle("Weight");
         gridLabelRenderer.setVerticalAxisTitleColor(Color.WHITE);
 
-
-
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
         myGraph.addSeries(series);
 
@@ -123,7 +114,6 @@ public class LogFragment extends Fragment {
         series.setThickness(10);
         series.setDrawBackground(true);
         series.setBackgroundColor(Color.rgb(254,16,77));
-
 
         return v;
     }

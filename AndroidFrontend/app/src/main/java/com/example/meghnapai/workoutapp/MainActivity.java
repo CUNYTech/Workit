@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                                      if(response.code() == 202){
                                          loginInfo.setPassword(pass);
                                          loginInfo.setUsername(user);
-                                         Intent homepage = new Intent(MainActivity.this, CalendarActivity.class);
+                                         Intent homepage = new Intent(MainActivity.this, Homepage.class);
                                          MainActivity.this.startActivity(homepage);
                                      }else{
                                          throwInavlidLogin();
