@@ -1,8 +1,9 @@
-
+DROP TABLE userDateExerciseJoins;
+DROP TABLE weightUserJoins;
 DROP TABLE cardioExerciseDateJoins;
 DROP TABLE calisthenicExerciseDateJoins;
 DROP TABLE setExerciseDateJoins;
-DROP TABLE bodyPartExerciseJoins
+DROP TABLE bodyPartExerciseJoins;
 DROP TABLE exerciseDateJoins;
 DROP TABLE dateUserWorkoutJoins;
 DROP TABLE bodyParts;
@@ -15,3 +16,4 @@ DROP TABLE datetimes;
 DROP TABLE weightUserJoins;
 DROP TABLE weights;
 DROP TABLE users;
+

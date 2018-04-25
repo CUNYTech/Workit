@@ -22,7 +22,7 @@ public class Homepage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-        Session session = new Session(this);
+        final Session session = new Session(this);
         Toast.makeText(this,session.getUsername(),Toast.LENGTH_LONG).show();
 
 
@@ -49,7 +49,7 @@ public class Homepage extends AppCompatActivity {
 
                     case R.id.nav_log:
                         mMainNav.setItemBackgroundResource(R.color.colorAccent);
-                        logFragment = new LogFragment();
+                        logFragment = new LogFragment(session);
                         setFragment(logFragment);
 
                         return true;

@@ -75,5 +75,6 @@ public interface WorkoutAPI {
     @GET("/date/get/sets/{user}/{date}/{time}/{exercise}")
     Call<List<GetSet>> getSetList(@Path(value = "user", encoded = true) String user, @Path(value = "date", encoded = true) String date, @Path(value = "time", encoded = true) String time, @Path(value = "exercise", encoded = true) String exercise);
 
-
+    @GET("/date/get/unique/exercise/{user}")
+    Call<List<GetExercise>> getUniqueExerciseList(@Path(value = "user", encoded = true) String user);
 }
