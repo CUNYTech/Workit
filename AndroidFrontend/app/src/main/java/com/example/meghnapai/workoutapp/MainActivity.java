@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 
 import com.APICaller.base.WorkoutAPI;
+import com.ChatStuff.ChatMainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,7 +68,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
               //  Intent SignInIntent = new Intent(MainActivity.this, ListViewActivity1.class);
+<<<<<<< HEAD
+                Intent SignInIntent = new Intent(MainActivity.this, ChatMainActivity.class);
+=======
                 Intent SignInIntent = new Intent(MainActivity.this, Homepage.class);
+>>>>>>> origin/master
                 MainActivity.this.startActivity(SignInIntent);
             }}
         );
