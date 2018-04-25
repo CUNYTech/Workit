@@ -1,7 +1,11 @@
 package com.example.meghnapai.workoutapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,7 +31,8 @@ public class Listview_reps extends AppCompatActivity {
     private ArrayAdapter<GetSet> adapter;
     ListView LVreps;
     TextView ExerciseName;
-    String nameEx;
+
+    TextView toolbarTitle;    String nameEx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,10 @@ public class Listview_reps extends AppCompatActivity {
         arrayList=new ArrayList<GetSet>();
         adapter = new ArrayAdapter<GetSet>(this, R.layout.custom_listview_ex, R.id.textView, arrayList);
         LVreps.setAdapter(adapter);
+
+
+        toolbarTitle=(TextView) findViewById(R.id.title);
+        toolbarTitle.setText("Workout");
 
         Bundle extras = getIntent().getExtras();
 
@@ -73,6 +82,8 @@ public class Listview_reps extends AppCompatActivity {
 
             }
 
+
+
             @Override
             public void onFailure(Call<List<GetSet>> call, Throwable t) {
                 System.out.println("Throws: " + t);
@@ -85,4 +96,28 @@ public class Listview_reps extends AppCompatActivity {
 
 
     }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.toolbar_ex_menu,menu);
+        return true; //super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch (item.getItemId())
+        {
+            case R.id.action_add:
+                Intent intent = new Intent (Listview_reps.this, Homepage.class);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

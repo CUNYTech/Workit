@@ -32,6 +32,7 @@ public class HomeFragment extends Fragment {
         View v= inflater.inflate(R.layout.fragment_home, container, false);
 
         Button chat = (Button) v.findViewById(R.id.IncDist);
+        Button workoutChoice = (Button) v.findViewById(R.id.workoutChoice);
 
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,8 +40,16 @@ public class HomeFragment extends Fragment {
                 Intent schedule = new Intent(getActivity(), CalendarActivity.class);
                 startActivity(schedule);
             }
+
         });
 
+       // workoutChoice.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+         //   public void onClick(View view) {
+          //      Intent WorkoutChoice = new Intent(getActivity(), .class);
+            //    startActivity(WorkoutChoice);
+          //  }
+        //});
         return v;
     }
 

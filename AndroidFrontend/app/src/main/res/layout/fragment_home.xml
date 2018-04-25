@@ -7,16 +7,18 @@
     <!-- TODO: Update blank fragment layout -->
 
 
-    <Button
-        android:id="@+id/IncDist"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
 
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/ETDistance"
-        android:background="@color/pink"
-        android:text="+"
-        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/workoutChoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="233dp"
+        android:text="Button" />
+
+
 
 
 </RelativeLayout>

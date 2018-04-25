@@ -77,7 +77,7 @@ def getUserSchedule(username, curDate, curTime):
 	for date in dates:
 		joinTable = DateUserWorkoutJoin.query.filter_by(user_id = user.id, datetime_id = date.id).first()
 		workout = WorkoutName.query.filter_by(id = joinTable.workoutName_id).first()
-		
+
 		schedule = {
 			"date": date.datetime,
 			"workout": workout.name
@@ -150,7 +150,7 @@ def enterExercise(exercise):
 		return status.HTTP_201_CREATED
 
 	newExercise = Exercise(name = exercise["exerciseName"], tag = exercise["tag"])
-	db.session.add(newExercise)	
+	db.session.add(newExercise)
 	db.session.commit()
 
 	newlistExercise = UserDateExerciseJoin(user_id = user.id, datetime_id = dates.id, exercise_id = newExercise.id)
@@ -253,7 +253,7 @@ def enterSetWeight(exerciseSet):
 	workout = WorkoutName.query.filter_by(name = exerciseSet[0]["workout"]).first()
 	dateJoinTable = DateUserWorkoutJoin.query.filter_by(user_id = user.id, datetime_id = dates.id, workoutName_id = workout.id).first()
 	checkExercise = Exercise.query.filter_by(name = exerciseSet[0]["exerciseName"]).first()
-	
+
 
 	if user is None:
 		return status.HTTP_428_PRECONDITION_REQUIRED
@@ -276,7 +276,7 @@ def enterSetWeight(exerciseSet):
 				newExerciseJoin = ExerciseDateJoin(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id)
 				db.session.add(newExerciseJoin)
 				db.session.commit()
-				
+
 				newSetJoin = SetExerciseDateJoin(exerciseDateJoin_id = newExerciseJoin.id, setWeight_id = checkSet.id)
 				db.session.add(newSetJoin)
 				db.session.commit()
@@ -295,12 +295,12 @@ def enterSetWeight(exerciseSet):
 				newExerciseJoin = ExerciseDateJoin(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id)
 				db.session.add(newExerciseJoin)
 				db.session.commit()
-				
+
 				newSetJoin = SetExerciseDateJoin(exerciseDateJoin_id = newExerciseJoin.id, setWeight_id = checkSet.id)
 				db.session.add(newSetJoin)
 				db.session.commit()
 			else:
-				newSetJoin = SetExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, setWeight_id = newSet.id)	
+				newSetJoin = SetExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, setWeight_id = newSet.id)
 				db.session.add(newSetJoin)
 				db.session.commit()
 
@@ -308,8 +308,8 @@ def enterSetWeight(exerciseSet):
 
 # for all cardio exercises
 def enterCardio(cardioExercise):
-	if not isinstance(cardioExercise, dict):
-		cardioExercise = json.loads(cardioExercise)
+	# if not isinstance(cardioExercise, dict):
+	# 	cardioExercise = json.loads(cardioExercise)
 
 	dateTime = datetime.strptime(cardioExercise[0]["date"] + " " +  cardioExercise[0]["time"], '%d-%m-%Y %I:%M%p')
 
@@ -318,7 +318,7 @@ def enterCardio(cardioExercise):
 	workout = WorkoutName.query.filter_by(name = cardioExercise[0]["workout"]).first()
 	dateJoinTable = DateUserWorkoutJoin.query.filter_by(user_id = user.id, datetime_id = dates.id, workoutName_id = workout.id).first()
 	checkExercise = Exercise.query.filter_by(name = cardioExercise[0]["exerciseName"]).first()
-	
+
 
 	if user is None:
 		return status.HTTP_428_PRECONDITION_REQUIRED
@@ -351,7 +351,7 @@ def enterCardio(cardioExercise):
 				db.session.add(newSetJoin)
 				db.session.commit()
 
-			
+
 		else:
 			newSet = CardioSet(length = exercise["length"], lengthUnit = exercise["lengthUnit"])
 			db.session.add(newSet)
@@ -366,7 +366,7 @@ def enterCardio(cardioExercise):
 				db.session.commit()
 
 			else:
-				newSetJoin = CardioExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, cardio_id = newSet.id)	
+				newSetJoin = CardioExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, cardio_id = newSet.id)
 				db.session.add(newSetJoin)
 				db.session.commit()
 
@@ -374,9 +374,9 @@ def enterCardio(cardioExercise):
 
 # for all cardio exercises
 def enterCalisthenic(calisthenicExercise):
-	if not isinstance(CalisthenicExercise, dict):
-		CalisthenicExercise = json.loads(CalisthenicExercise)
-	
+	# if not isinstance(calisthenicExercise, dict):
+	# 	calisthenicExercise = json.loads(calisthenicExercise)
+	#
 
 	dateTime = datetime.strptime(calisthenicExercise[0]["date"] + " " +  calisthenicExercise[0]["time"], '%d-%m-%Y %I:%M%p')
 
@@ -390,9 +390,9 @@ def enterCalisthenic(calisthenicExercise):
 	if user is None:
 		return status.HTTP_428_PRECONDITION_REQUIRED
 
-	
+
 	if dateJoinTable is None:
-		
+
 		return status.HTTP_428_PRECONDITION_REQUIRED
 
 	newlistExercise = UserDateExerciseJoin(user_id = user.id, datetime_id = dates.id, exercise_id = checkExercise.id)
@@ -407,7 +407,7 @@ def enterCalisthenic(calisthenicExercise):
 				newExerciseJoin = ExerciseDateJoin(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id)
 				db.session.add(newExerciseJoin)
 				db.session.commit()
-			
+
 				newSetJoin = CalisthenicExerciseDateJoin(exerciseDateJoin_id = newExerciseJoin.id, calisthenic_id = checkCalisthenic.id)
 				db.session.add(newSetJoin)
 				db.session.commit()
@@ -425,11 +425,11 @@ def enterCalisthenic(calisthenicExercise):
 				newExerciseJoin = ExerciseDateJoin(dateJoin_id = dateJoinTable.id, exercise_id = checkExercise.id)
 				db.session.add(newExerciseJoin)
 				db.session.commit()
-				newSetJoin = CalisthenicExerciseDateJoin(exerciseDateJoin_id = newExerciseJoin.id, calisthenic_id = newSet.id)	
+				newSetJoin = CalisthenicExerciseDateJoin(exerciseDateJoin_id = newExerciseJoin.id, calisthenic_id = newSet.id)
 				db.session.add(newSetJoin)
 				db.session.commit()
 			else:
-				newSetJoin = CalisthenicExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, calisthenic_id = newSet.id)	
+				newSetJoin = CalisthenicExerciseDateJoin(exerciseDateJoin_id = checkExerciseJoin.id, calisthenic_id = newSet.id)
 				db.session.add(newSetJoin)
 				db.session.commit()
 
@@ -448,7 +448,7 @@ def getWeightLiftingProgress(username, exerciseName):
 
 		if exerciseJoin is not None:
 			getSetWeightJoin = SetExerciseDateJoin.query.filter_by(exerciseDateJoin_id = exerciseJoin.id).all()
-			
+
 			maxSet = {
 					"max" : 0,
 					"set" : None
@@ -458,7 +458,7 @@ def getWeightLiftingProgress(username, exerciseName):
 				if getSet.weight > maxSet["max"]:
 					maxSet["max"] = getSet.weight
 					maxSet["set"] = getSet
-				
+
 			progress = {
 				"date": date.datetime.datetime,
 				"set Number": maxSet["set"].setNumber,
@@ -485,7 +485,7 @@ def getCalisthenicProgress(username, exerciseName):
 
 		if exerciseJoin is not None:
 			getCalisthenicJoin = CalisthenicExerciseDateJoin.query.filter_by(exerciseDateJoin_id = exerciseJoin.id).all()
-			
+
 			maxSet = {
 					"max" : 0,
 					"set" : None
@@ -495,11 +495,11 @@ def getCalisthenicProgress(username, exerciseName):
 				if getSet.reps > maxSet["max"]:
 					maxSet["max"] = getSet.reps
 					maxSet["set"] = getSet
-				
+
 			progress = {
 				"date": date.datetime.datetime,
 				"reps" : maxSet["set"].reps,
-				"setNumber" : maxSet["set"].setNumber 
+				"setNumber" : maxSet["set"].setNumber
 
 			}
 
@@ -520,7 +520,7 @@ def getCardioProgress(username, exerciseName):
 
 		if exerciseJoin is not None:
 			getCardioJoin = CardioExerciseDateJoin.query.filter_by(exerciseDateJoin_id = exerciseJoin.id).all()
-			
+
 			maxSet = {
 					"max" : 0,
 					"set" : None
@@ -530,7 +530,7 @@ def getCardioProgress(username, exerciseName):
 				if getSet.length > maxSet["max"]:
 					maxSet["max"] = getSet.length
 					maxSet["set"] = getSet
-				
+
 			progress = {
 				"date": date.datetime.datetime,
 				"length" : maxSet["set"].length,
@@ -567,12 +567,12 @@ def getExerciseByBodyPart(bodyPart):
 def getExerciseList(user, date, time):
 
 	dateTime = datetime.strptime(date + " " +  time, '%d-%m-%Y %I:%M%p')
-	
+
 	getUser = User.query.filter_by(username= user).first()
 	getDatetime = Datetime.query.filter_by(datetime = dateTime).first()
 
 	getUserDateExerciseJoin = UserDateExerciseJoin.query.filter_by(user_id = getUser.id, datetime_id = getDatetime.id).all()
-	
+
 
 	exerciseList = []
 	for exercises in getUserDateExerciseJoin:
@@ -620,7 +620,7 @@ def getSetExercises(user):
 		getExercise = Exercise.query.filter_by(id = exerciseid.exercise_id).first()
 
 		exerciseSet.add(ExerciseHolder(getExercise.name,getExercise.tag))
-		
+
 
 	exerciseList = []
 
@@ -634,14 +634,14 @@ def getSetExercises(user):
 
 		exerciseList.append(exercise)
 
-	
-	return exerciseList 
+
+	return exerciseList
 
 
 
 def getSets(user, date, time, exercise):
 	dateTime = datetime.strptime(date + " " +  time, '%d-%m-%Y %I:%M%p')
-	
+
 	getUser = User.query.filter_by(username= user).first()
 	getDatetime = Datetime.query.filter_by(datetime = dateTime).first()
 	getExercise = Exercise.query.filter_by(name= exercise).first()
@@ -666,7 +666,7 @@ def getSets(user, date, time, exercise):
 
 			sets.append(newSet)
 
-		
+
 
 
 	if getExercise.tag.lower() == "cardio":
@@ -679,17 +679,17 @@ def getSets(user, date, time, exercise):
 			newSet = {
 				"length" : getSet.length,
 				"lengthUnit" : getSet.lengthUnit
-				
+
 			}
 
 			sets.append(newSet)
 
-		
+
 
 	if getExercise.tag.lower() == "calisthenics":
 		getSetJoin = CalisthenicExerciseDateJoin.query.filter_by(exerciseDateJoin_id = getExerciseJoin.id).all()
 
-		
+
 
 		for liftingset in  getSetJoin:
 			getSet = CalisthenicSet.query.filter_by(id = liftingset.calisthenic_id).first()
@@ -697,10 +697,10 @@ def getSets(user, date, time, exercise):
 			newSet = {
 				"setNumber" : getSet.setNumber,
 				"reps" : getSet.reps
-				
+
 			}
 
 			sets.append(newSet)
 
-	
+
 	return sets

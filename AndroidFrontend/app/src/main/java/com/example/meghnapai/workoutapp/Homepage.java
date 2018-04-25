@@ -1,5 +1,6 @@
 package com.example.meghnapai.workoutapp;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,10 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.ChatStuff.ChatMainActivity;
+
+import java.util.Calendar;
+
 public class Homepage extends AppCompatActivity {
 
     private BottomNavigationView mMainNav;
@@ -15,6 +20,7 @@ public class Homepage extends AppCompatActivity {
 
     private HomeFragment homeFragment;
     private LogFragment logFragment;
+    private ChatFragment chatFragment;
 
 
 
@@ -43,8 +49,11 @@ public class Homepage extends AppCompatActivity {
 
                     case R.id.nav_home:
                         mMainNav.setItemBackgroundResource(R.color.colorPrimaryDark);
-                        homeFragment = new HomeFragment();
-                        setFragment(homeFragment);
+                      //  homeFragment = new HomeFragment();
+                       // setFragment(homeFragment);
+
+                        Intent SignInIntent1 = new Intent(Homepage.this, CalendarActivity.class);
+                        Homepage.this.startActivity(SignInIntent1);
                         return true;
 
                     case R.id.nav_log:
@@ -56,7 +65,11 @@ public class Homepage extends AppCompatActivity {
 
                     case R.id.nav_account:
                         mMainNav.setItemBackgroundResource(R.color.pink);
+                     //   chatFragment = new ChatFragment();
+                     //   setFragment(chatFragment);
 
+                        Intent SignInIntent = new Intent(Homepage.this, ChatMainActivity.class);
+                        Homepage.this.startActivity(SignInIntent);
                         return true;
 
                     default:

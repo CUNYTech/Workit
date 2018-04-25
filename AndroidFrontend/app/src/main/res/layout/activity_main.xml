@@ -19,7 +19,7 @@
             android:id="@+id/WelcomeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/welcome"
+            android:text="Welcome to Workit!"
             android:textColor="#fff"
             android:textSize="30sp" />
 
@@ -28,7 +28,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text="@string/instruction"
             android:textColor="#fff"
             android:textSize="15sp" />
 
