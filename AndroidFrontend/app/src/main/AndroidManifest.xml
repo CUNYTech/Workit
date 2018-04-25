@@ -35,6 +35,25 @@
         <activity android:name=".CardioReps" />
         <activity android:name=".CalisthenicReps" />
         <activity android:name=".Listview_reps"></activity>
+
+        <activity
+            android:name="com.ChatStuff.ChatMainActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name="com.ChatStuff.StartActivity" />
+        <activity
+            android:name="com.ChatStuff.ChatRegisterActivity"
+            android:parentActivityName="com.ChatStuff.StartActivity" />/>
+        <activity android:name="com.ChatStuff.ChatLoginActivity" />
+        <activity android:name="com.ChatStuff.ChatUserProfileActivity" />
+        <activity
+            android:name="com.ChatStuff.ChatActivity"
+            android:parentActivityName="com.ChatStuff.ChatMainActivity" />
+        <activity android:name="com.ChatStuff.SettingsActivity" />
+        <activity
+            android:name="com.ChatStuff.StatusActivity"
+            android:parentActivityName="com.ChatStuff.SettingsActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name="com.ChatStuff.UsersActivity"></activity>
     </application>
 
 </manifest>
