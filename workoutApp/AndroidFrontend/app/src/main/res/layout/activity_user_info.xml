@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="536dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        tools:layout_editor_absoluteY="31dp">
+
+        <TextView
+            android:id="@+id/UserInfoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="User Information"
+            android:textColor="@color/white"
+            android:textSize="30dp" />
+
+
+
+        <TextView
+            android:id="@+id/ageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter your Age:"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <EditText
+                android:id="@+id/ageET"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:hint="Age"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/Lightgrey" />
+
+            <TextView
+                android:id="@+id/yearsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ageET"
+                android:paddingTop="20dp"
+                android:paddingLeft="5sp"
+                android:text="years"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/WeigthTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter your Weight:"
+            android:layout_marginTop="25sp"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/weightET"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:hint="Weight"
+                android:inputType="numberDecimal"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/Lightgrey" />
+
+            <TextView
+                android:id="@+id/lbsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/weightET"
+                android:paddingTop="20sp"
+                android:paddingLeft="5sp"
+                android:text="lbs"
+                android:textColor="@color/white"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/HeightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter your Height:"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+
+            <EditText
+                android:id="@+id/inchesET"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/white"
+                android:textColorHint="@color/Lightgrey" />
+
+            <TextView
+                android:id="@+id/inchesTextEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/inchesET"
+                android:paddingTop="20sp"
+                android:paddingLeft="5sp"
+                android:text="in"
+                android:textColor="@color/white"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/genderTextEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="15dp"
+                android:text="I am"
+                android:textColor="@color/white"
+                android:textSize="15dp"/>
+
+            <RadioGroup
+                android:id="@+id/GenderRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/genderTextEdit"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/MaleRB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:onClick="RBClick"
+                    android:textColor="@color/white"
+                    />
+                <RadioButton
+                    android:id="@+id/FemaleRB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="RBClick"
+                    android:text="Female"
+                    android:textColor="@color/white" />
+
+            </RadioGroup>
+
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/SignUpBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/buttonstyle"
+            android:text="SELECT SCHEDULE"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

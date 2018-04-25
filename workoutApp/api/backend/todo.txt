@@ -1,0 +1,11 @@
+user class:
+add height and unit of measurement
+
+create new table wieght
+id
+cur weight 
+unit
+bmi 
+created at()
+
+joinTable
