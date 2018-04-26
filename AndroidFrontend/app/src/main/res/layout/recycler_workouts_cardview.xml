@@ -18,7 +18,7 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/pink"
+            android:background="@color/colorPrimaryDark"
             >
 
         <TextView
@@ -30,6 +30,7 @@
             android:layout_alignParentTop="true"
             android:text="Exercise"
             android:textSize="40dp"
+            android:textColor="@color/white"
             android:layout_alignParentLeft="true" />
 
 
@@ -41,6 +42,7 @@
                 android:layout_alignEnd="@+id/Exercise"
                 android:layout_alignTop="@+id/Exercise"
                 android:text="Completed"
+                android:textColor="@color/white"
                 android:layout_alignRight="@+id/Exercise"
                 android:buttonTint="@color/colorPrimaryDark"
                 />

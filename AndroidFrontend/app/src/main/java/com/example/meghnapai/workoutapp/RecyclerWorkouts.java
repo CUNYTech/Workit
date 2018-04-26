@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,7 @@ public class RecyclerWorkouts extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
 
+    TextView toolbarTitle;
     ArrayList<GetExercise> exercises;
 //
     List<Product> productList;
@@ -46,7 +50,11 @@ public class RecyclerWorkouts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_workouts);
 
+        Toolbar toolbar = findViewById(R.id.toolbar3);
+        setSupportActionBar(toolbar);
 
+        toolbarTitle=(TextView) findViewById(R.id.title);
+        toolbarTitle.setText("Workout Name");
 
         //getting the recyclerview from xml
         recyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
@@ -120,6 +128,34 @@ public class RecyclerWorkouts extends AppCompatActivity {
 //            }
 //        });
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.toolbar_add,menu);
+        return true; //super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch (item.getItemId())
+        {
+            case R.id.action_add1:
+                Intent intent = new Intent(RecyclerWorkouts.this, BodyListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_done:
+                Intent intent1 = new Intent(RecyclerWorkouts.this, Homepage.class);
+                startActivity(intent1);
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
 

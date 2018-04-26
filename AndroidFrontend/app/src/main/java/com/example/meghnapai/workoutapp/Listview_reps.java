@@ -3,6 +3,7 @@ package com.example.meghnapai.workoutapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,6 +40,8 @@ public class Listview_reps extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listview_reps);
 
+        Toolbar toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
         LVreps= (ListView) findViewById(R.id.LVReps);
         ExerciseName= (TextView) findViewById(R.id.ExerciseNameTV);
         arrayList=new ArrayList<GetSet>();
@@ -47,7 +50,7 @@ public class Listview_reps extends AppCompatActivity {
 
 
         toolbarTitle=(TextView) findViewById(R.id.title);
-        toolbarTitle.setText("Workout");
+        toolbarTitle.setText("");
 
         Bundle extras = getIntent().getExtras();
 
@@ -98,12 +101,11 @@ public class Listview_reps extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.toolbar_ex_menu,menu);
+        inflater.inflate(R.menu.toolbar_view,menu);
         return true; //super.onCreateOptionsMenu(menu);
     }
 
@@ -112,12 +114,14 @@ public class Listview_reps extends AppCompatActivity {
 
         switch (item.getItemId())
         {
-            case R.id.action_add:
-                Intent intent = new Intent (Listview_reps.this, Homepage.class);
+            case R.id.action_back:
+                Intent intent = new Intent(Listview_reps.this, RecyclerWorkouts.class);
                 startActivity(intent);
+
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 }
