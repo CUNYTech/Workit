@@ -84,7 +84,7 @@ public class ChatLoginActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             mLogInProgress.hide();
                             //String test = task.getException().getMessage();
-                            Toast.makeText(ChatLoginActivity.this, password, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ChatLoginActivity.this, "Login Failed.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

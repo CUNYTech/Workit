@@ -4,12 +4,17 @@ public class Messages {
 
     private String message;
     private boolean seen;
+    private String from;
 
     public Messages() {
 
     }
 
-    public Messages(String message, boolean seen) {
+    public Messages(String from) {
+        this.from = from;
+    }
+
+    public Messages(String message, boolean seen, String from) {
         this.message = message;
         this.seen = true;
     }
@@ -29,4 +34,8 @@ public class Messages {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public String getFrom() { return from; }
+
+    public void setFrom(String from) { this.from = from; }
 }
