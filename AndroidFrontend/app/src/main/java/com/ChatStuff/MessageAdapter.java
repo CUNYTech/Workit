@@ -1,6 +1,7 @@
 package com.ChatStuff;
 
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,11 +53,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         Messages c = mMessageList.get(i);
         String from_user = c.getFrom();
         if (from_user.equals(currentUserID)) {
-            viewHolder.messageText.setBackgroundColor(Color.WHITE);
-            viewHolder.messageText.setTextColor(Color.BLACK);
+            viewHolder.messageText.setBackgroundColor(Color.parseColor("#551f31"));
+            viewHolder.messageText.setTextColor(Color.WHITE);
         }
         else {
-            viewHolder.messageText.setBackgroundColor(R.drawable.message_text_background);
+            viewHolder.messageText.setBackgroundColor(Color.parseColor("#23283a"));
             viewHolder.messageText.setTextColor(Color.WHITE);
         }
         viewHolder.messageText.setText(c.getMessage());
