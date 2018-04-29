@@ -1,5 +1,6 @@
 package com.ChatStuff;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.meghnapai.workoutapp.R;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     private List<Messages> mMessageList;
     private DatabaseReference mUserDatabase;
+    private FirebaseAuth mAuth;
 
     public MessageAdapter(List<Messages> mMessageList) {
         this.mMessageList = mMessageList;
@@ -44,8 +47,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     @Override
     public void onBindViewHolder(final MessageViewHolder viewHolder, int i) {
-
+        mAuth = FirebaseAuth.getInstance();
+        String currentUserID = mAuth.getCurrentUser().getUid();
         Messages c = mMessageList.get(i);
+        String from_user = c.getFrom();
+        if (from_user.equals(currentUserID)) {
+            viewHolder.messageText.setBackgroundColor(Color.WHITE);
+            viewHolder.messageText.setTextColor(Color.BLACK);
+        }
+        else {
+            viewHolder.messageText.setBackgroundColor(R.drawable.message_text_background);
+            viewHolder.messageText.setTextColor(Color.WHITE);
+        }
         viewHolder.messageText.setText(c.getMessage());
 
     }

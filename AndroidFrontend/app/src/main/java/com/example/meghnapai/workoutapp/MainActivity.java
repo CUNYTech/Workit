@@ -68,11 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
               //  Intent SignInIntent = new Intent(MainActivity.this, ListViewActivity1.class);
-<<<<<<< HEAD
                 Intent SignInIntent = new Intent(MainActivity.this, ChatMainActivity.class);
-=======
-                Intent SignInIntent = new Intent(MainActivity.this, Homepage.class);
->>>>>>> origin/master
                 MainActivity.this.startActivity(SignInIntent);
             }}
         );
@@ -105,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                                      if(response.code() == 202){
                                          loginInfo.setPassword(pass);
                                          loginInfo.setUsername(user);
-                                         Intent homepage = new Intent(MainActivity.this, CalendarActivity.class);
+                                         Intent homepage = new Intent(MainActivity.this, Homepage.class);
                                          MainActivity.this.startActivity(homepage);
                                      }else{
                                          throwInavlidLogin();

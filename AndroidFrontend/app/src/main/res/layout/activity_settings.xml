@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ChatStuff.SettingsActivity">
+    tools:context="com.ChatStuff.SettingsActivity"
+    android:background="@color/colorPrimaryDark">
 
     <TextView
         android:id="@+id/settings_name"
@@ -14,7 +15,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="81dp"
         android:text="Display Name"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/settings_status"
@@ -22,9 +24,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="172dp"
-        android:text="Default Statud"
-        android:textSize="17sp" />
+        android:layout_marginTop="125dp"
+        android:text="Default Status"
+        android:textSize="17sp"
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/settings_status_btn"
@@ -32,6 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/buttonstyle"
+        android:textColor="#fff"
         android:layout_marginTop="224dp"
         android:text="Change Status" />
 </RelativeLayout>
