@@ -1,7 +1,9 @@
 package com.example.meghnapai.workoutapp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,11 +29,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 
 public class MainActivity extends AppCompatActivity {
 
+    // brandons stuff
+    private ProgressDialog mLogInProgress;
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -40,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Session session = new Session(this);
+
+        // brandons stuff
+        mAuth = FirebaseAuth.getInstance();
+        mLogInProgress = new ProgressDialog(this );
 
         final TextView WelcomTextView= (TextView) findViewById(R.id.WelcomeTextView);
         final TextView IntroductionTextView= (TextView) findViewById(R.id.IntroductionTextView);
@@ -83,7 +97,9 @@ public class MainActivity extends AppCompatActivity {
                 final String user= usernameTextEdit.getText().toString();
                 final String pass=passwordTextEdit.getText().toString();
 
-
+                // loginUser(user, pass);
+                // AN EMAIL EDIT TEXT NEEDS TO BE ADDED. FIREBASE NEEDS EMAIL + PASSWORD TO LOGIN ONLY.
+                
                 OkHttpClient httpClient = new OkHttpClient();
                 Retrofit.Builder builder = new Retrofit.Builder()
                         .baseUrl(WorkoutAPI.BASE_URL)
@@ -124,6 +140,28 @@ public class MainActivity extends AppCompatActivity {
     }
     public void throwInavlidLogin(){
         Toast.makeText(this, "Invalid Login", Toast.LENGTH_SHORT).show();
+    }
+
+    private void loginUser(String email, final String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            mLogInProgress.dismiss();
+                            //Intent mainIntent = new Intent(ChatLoginActivity.this, ChatMainActivity.class);
+                            //mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            //startActivity(mainIntent);
+                            FirebaseUser user = mAuth.getCurrentUser();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            mLogInProgress.hide();
+                            //String test = task.getException().getMessage();
+                            Toast.makeText(MainActivity.this, "Login Failed.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }
 
