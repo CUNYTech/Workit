@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView IntroductionTextView= (TextView) findViewById(R.id.IntroductionTextView);
         final  EditText usernameTextEdit= (EditText) findViewById(R.id.usernameTextEdit);
         final EditText passwordTextEdit= (EditText) findViewById(R.id.passwordTextEdit);
+        final EditText emailTextEdit= (EditText) findViewById(R.id.emailTextEdit); //for login
 
         final Button infoBtn = (Button) findViewById(R.id.infoBtn);
         final Button SignUpBtn = (Button) findViewById(R.id.SignUpBtn);

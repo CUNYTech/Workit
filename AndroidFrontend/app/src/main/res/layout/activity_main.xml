@@ -66,6 +66,15 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/emailTextEdit"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_email_black_24dp"
+            android:drawablePadding="10dp"
+            android:hint="EMAIL"
+            android:maxLines="1"/>
+
+        <EditText
             android:id="@+id/usernameTextEdit"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
