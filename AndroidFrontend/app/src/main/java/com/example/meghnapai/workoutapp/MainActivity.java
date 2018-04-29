@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
         infoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  Intent SignInIntent = new Intent(MainActivity.this, ListViewActivity1.class);
-                Intent SignInIntent = new Intent(MainActivity.this, ChatMainActivity.class);
+                Intent SignInIntent = new Intent(MainActivity.this, ListViewActivity1.class);
+                // Intent SignInIntent = new Intent(MainActivity.this, ChatMainActivity.class);
                 MainActivity.this.startActivity(SignInIntent);
             }}
         );
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // loginUser(user, pass);
                 // AN EMAIL EDIT TEXT NEEDS TO BE ADDED. FIREBASE NEEDS EMAIL + PASSWORD TO LOGIN ONLY.
-                
+
                 OkHttpClient httpClient = new OkHttpClient();
                 Retrofit.Builder builder = new Retrofit.Builder()
                         .baseUrl(WorkoutAPI.BASE_URL)
