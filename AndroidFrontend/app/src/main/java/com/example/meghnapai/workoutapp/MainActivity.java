@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
         infoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent SignInIntent = new Intent(MainActivity.this, ListViewActivity1.class);
-                // Intent SignInIntent = new Intent(MainActivity.this, ChatMainActivity.class);
+                // Intent SignInIntent = new Intent(MainActivity.this, ListViewActivity1.class);
+                Intent SignInIntent = new Intent(MainActivity.this, ChatMainActivity.class);
                 MainActivity.this.startActivity(SignInIntent);
             }}
         );
