@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.meghnapai.workoutapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".BodyListActivity" />
+        <activity android:name=".ListViewActivity1" />
+        <activity android:name=".UserInfoActivity" />
+        <activity android:name=".WeightsActivity" />
+        <activity android:name=".CalendarActivity" />
+        <activity android:name=".RecyclerWorkouts" />
+        <activity android:name=".Homepage" />
+        <activity android:name=".WorkoutLog" />
+        <activity android:name=".WeightsAndRepsActivity" />
+        <receiver android:name=".ScheduleNotification" />
+        <activity android:name=".CardioReps" />
+        <activity android:name=".CalisthenicReps" />
+        <activity android:name=".Listview_reps"></activity>
+
+        <activity
+            android:name="com.ChatStuff.ChatMainActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name="com.ChatStuff.StartActivity" />
+        <activity
+            android:name="com.ChatStuff.ChatRegisterActivity"
+            android:parentActivityName="com.ChatStuff.StartActivity" />/>
+        <activity android:name="com.ChatStuff.ChatLoginActivity" />
+        <activity android:name="com.ChatStuff.ChatUserProfileActivity" />
+        <activity
+            android:name="com.ChatStuff.ChatActivity"
+            android:parentActivityName="com.ChatStuff.ChatMainActivity" />
+        <activity android:name="com.ChatStuff.SettingsActivity" />
+        <activity
+            android:name="com.ChatStuff.StatusActivity"
+            android:parentActivityName="com.ChatStuff.SettingsActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name="com.ChatStuff.UsersActivity"></activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.example.meghnapai.workoutapp.WeightsAndRepsActivity">
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="536dp"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:id="@+id/WeightsTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:text="Weight (in lbs)"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/ETWeights"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/WeightsTV"
+                android:layout_centerHorizontal="true"
+                android:cursorVisible="false"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/IncWeights"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ETWeights"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/ETWeights"
+                android:background="@color/pink"
+                android:text="+"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/DecWeights"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ETWeights"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/ETWeights"
+                android:background="@color/pink"
+                android:text="-"
+                android:textColor="@color/white" />
+
+
+            <TextView
+                android:id="@+id/RepsTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ETWeights"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="20dp"
+                android:text="Reps"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/ETReps"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RepsTV"
+                android:layout_centerHorizontal="true"
+                android:cursorVisible="false"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/IncReps"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ETReps"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/ETReps"
+                android:background="@color/pink"
+                android:text="+"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/DecReps"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ETReps"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/ETReps"
+                android:background="@color/pink"
+                android:text="-"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/SaveBtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/buttonstyle"
+            android:text="SAVE"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/DoneBtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@+id/SaveBtn"
+            android:background="@drawable/buttonstyle"
+            android:text="DONE"
+            android:textColor="#fff" />
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/LVSets"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

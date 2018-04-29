@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.meghnapai.workoutapp.Listview_reps"
+    android:background="@color/colorPrimaryDark">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <include
+        android:id="@+id/toolbar2"
+        layout="@layout/toolbar"
+        />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ExerciseNameTV"
+            android:textSize="20dp"
+            android:text="Exercise Name"
+            android:textColor="@color/white"
+            android:layout_below="@+id/toolbar2"/>
+
+    <ListView
+        android:id="@+id/LVReps"
+        android:layout_marginTop="10dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ExerciseNameTV"/>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
