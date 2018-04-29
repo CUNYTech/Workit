@@ -92,14 +92,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                final Session loginInfo=new Session(MainActivity.this);
-                final  EditText usernameTextEdit= (EditText) findViewById(R.id.usernameTextEdit);
+                final EditText usernameTextEdit= (EditText) findViewById(R.id.usernameTextEdit);
                 final EditText passwordTextEdit= (EditText) findViewById(R.id.passwordTextEdit);
+                final EditText emailTextEdit = (EditText) findViewById(R.id.emailTextEdit);
 
                 final String user= usernameTextEdit.getText().toString();
                 final String pass=passwordTextEdit.getText().toString();
+                final String email = emailTextEdit.getText().toString();
 
-                // loginUser(user, pass);
-                // AN EMAIL EDIT TEXT NEEDS TO BE ADDED. FIREBASE NEEDS EMAIL + PASSWORD TO LOGIN ONLY.
+                loginUser(email, pass);
 
                 OkHttpClient httpClient = new OkHttpClient();
                 Retrofit.Builder builder = new Retrofit.Builder()

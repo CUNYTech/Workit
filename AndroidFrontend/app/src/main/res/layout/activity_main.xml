@@ -19,7 +19,7 @@
             android:id="@+id/WelcomeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome to Workit!"
+            android:text="Welcome to Work It!"
             android:textColor="#fff"
             android:textSize="30sp" />
 
